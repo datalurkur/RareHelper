@@ -1,8 +1,25 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System;
 
-class RareData
+public class RareData
 {
-    public static List<RareGood> GetRares()
+    public class RareCache
+    {
+        public List<RareGood> rares;
+
+        public RareCache()
+        {
+            rares = null;
+        }
+
+        public RareCache(List<RareGood> r)
+        {
+            rares = r;
+        }
+    }
+
+    public static List<RareGood> HardcodedRares()
     {
         List<RareGood> temp = new List<RareGood>();
         temp.Add(new RareGood("39 Tauri", "Porta", "Tauri Chimes"));
@@ -100,5 +117,15 @@ class RareData
         temp.Add(new RareGood("Zaonce", "Ridley Scott", "Leathery Eggs"));
         temp.Add(new RareGood("Zeessze", "Nicollier Hanger", "Zeessze Ant Grub Glue"));
         return temp;
+    }
+
+    public static List<RareGood> GetRares()
+    {
+        RareCache cache;
+        if (LocalData<RareCache>.LoadRunData("Rares.xml", out cache))
+        {
+            return cache.rares;
+        }
+        return HardcodedRares();
     }
 }

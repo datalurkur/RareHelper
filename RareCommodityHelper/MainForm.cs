@@ -107,10 +107,13 @@ namespace RareCommodityHelper
 
             ResultsView.ItemSelectionChanged -= SetCurrentLocation;
             ResultsView.Columns.Clear();
-            ResultsView.Columns.Add("System", 150);
+            ResultsView.Columns.Add("System", 120);
             ResultsView.Columns.Add("Station", 150);
             ResultsView.Columns.Add("Commodity", 200);
-            ResultsView.Columns.Add("Distance", 80);
+            ResultsView.Columns.Add("Distance", 70);
+            ResultsView.Columns.Add("Station Distance", 70);
+            ResultsView.Columns.Add("Last Known Price", 50);
+            ResultsView.Columns.Add("Station Allegiance", 90);
             ResultsView.Items.Clear();
 
             List<Destination> sorted;
@@ -123,6 +126,9 @@ namespace RareCommodityHelper
                 newItem.SubItems.Add(rare.Station);
                 newItem.SubItems.Add(rare.Name);
                 newItem.SubItems.Add(dest.Distance.ToString("0.00"));
+                newItem.SubItems.Add(rare.StationDistance);
+                newItem.SubItems.Add(rare.LastKnownCost.ToString());
+                newItem.SubItems.Add(rare.Allegiance);
                 ResultsView.Items.Add(newItem);
             }
 

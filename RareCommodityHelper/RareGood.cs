@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 public class Coords
 {
@@ -30,10 +31,27 @@ public class Destination
 
 public class RareGood
 {
-    public string Name = "";
-    public string LocationName = "";
-    public StarSystem Location = null;
-    public string Station = "";
+    public string Name;
+    public string LocationName;
+    public string Station;
+    public string StationDistance;
+    public string Allegiance;
+    public int LastKnownCost;
+
+    [XmlIgnoreAttribute]
+    public StarSystem Location;
+
+    public RareGood()
+    {
+        Name = "";
+        LocationName = "";
+        Station = "";
+        StationDistance = "";
+        Allegiance = "";
+        LastKnownCost = 0;
+
+        Location = null;
+    }
 
     public RareGood(string location, string station, string name)
     {

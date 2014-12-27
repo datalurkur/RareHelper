@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Xml.Serialization;
+using System.Reflection;
 
 class LocalData<T>
 {
@@ -13,9 +14,14 @@ class LocalData<T>
         return ret;
     }
 
-    public static void SaveLocalData(T data, string fileName)
+    private static string ExecutableDir()
     {
-        string fullName = Path.Combine(LocalDataDir(), fileName);
+        return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    }
+
+    private static void SaveData(T data, string path, string fileName)
+    {
+        string fullName = Path.Combine(path, fileName);
         if (File.Exists(fullName))
         {
             File.Delete(fullName);
@@ -26,9 +32,9 @@ class LocalData<T>
         stream.Close();
     }
 
-    public static bool LoadLocalData(string fileName, out T ret)
+    private static bool LoadData(string path, string fileName, out T ret)
     {
-        string fullName = Path.Combine(LocalDataDir(), fileName);
+        string fullName = Path.Combine(path, fileName);
         if (File.Exists(fullName))
         {
             FileStream stream = File.OpenRead(fullName);
@@ -39,5 +45,25 @@ class LocalData<T>
         }
         ret = default(T);
         return false;
+    }
+
+    public static void SaveLocalData(T data, string fileName)
+    {
+        SaveData(data, LocalDataDir(), fileName);
+    }
+
+    public static bool LoadLocalData(string fileName, out T ret)
+    {
+        return LoadData(LocalDataDir(), fileName, out ret);
+    }
+
+    public static void SaveRunData(T data, string fileName)
+    {
+        SaveData(data, ExecutableDir(), fileName);
+    }
+
+    public static bool LoadRunData(string fileName, out T ret)
+    {
+        return LoadData(ExecutableDir(), fileName, out ret);
     }
 }

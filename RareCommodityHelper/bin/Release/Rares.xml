@@ -1,0 +1,805 @@
+<?xml version="1.0"?>
+<RareCache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <rares>
+    <RareGood>
+      <Name>Tauri Chimes</Name>
+      <LocationName>39 Tauri</LocationName>
+      <Station>Porta</Station>
+      <StationDistance>990ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>938</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Chateau De Aegaeon</Name>
+      <LocationName>Aegaeon</LocationName>
+      <Station>Schweikart Station</Station>
+      <StationDistance>11600ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>0</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Edan Apples of Aerial</Name>
+      <LocationName>Aerial</LocationName>
+      <Station>Andrade Legacy</Station>
+      <StationDistance>180ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>621</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Alacarakmo Skin Art</Name>
+      <LocationName>Alacarakmo</LocationName>
+      <Station>Weyl Gateway</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>1421</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Centauri Mega Gin</Name>
+      <LocationName>Alpha Centauri</LocationName>
+      <Station>Hutton Oribtal</Station>
+      <StationDistance>0.22ly</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>3319</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Altairian Skin</Name>
+      <LocationName>Altair</LocationName>
+      <Station>Solo Orbiter</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>489</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Alya Body Soup</Name>
+      <LocationName>Alya</LocationName>
+      <Station>Malaspina Gateway</Station>
+      <StationDistance>540000ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>454</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Anduliga Fire Works</Name>
+      <LocationName>Anduliga</LocationName>
+      <Station>Celsius Estate</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>891</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Any Na Coffee</Name>
+      <LocationName>Any Na</LocationName>
+      <Station>Libby Orbital</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>1790</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Arouca Conventula Sweets</Name>
+      <LocationName>Arouca</LocationName>
+      <Station>Shipton Orbital</Station>
+      <StationDistance>410ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>1203</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Az Cancri Formula 42</Name>
+      <LocationName>AZ Cancri</LocationName>
+      <Station>Fisher Station</Station>
+      <StationDistance>16ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>6442</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Baltha'sine Vacuum Krill</Name>
+      <LocationName>Baltah'Sine</LocationName>
+      <Station>Baltha'sine Station</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>825</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Banki Amphibious Leather</Name>
+      <LocationName>Banki</LocationName>
+      <Station>Parsons Vista</Station>
+      <StationDistance>531869ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>634</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Bast Snake Gin</Name>
+      <LocationName>Bast</LocationName>
+      <Station>Hart Station</Station>
+      <StationDistance>202ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>1080</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Belalans Ray Leather</Name>
+      <LocationName>Belalans</LocationName>
+      <Station>Boscovich Ring</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>882</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Borasetani Pathogenetics</Name>
+      <LocationName>Borasetani</LocationName>
+      <Station>Katzenstien Terminal</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Alliance</Allegiance>
+      <LastKnownCost>8269</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>CD-75 Kitten Brand Coffee</Name>
+      <LocationName>CD-75 661</LocationName>
+      <Station>Kirk Dock</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>2373</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Cherbones Blood Crystals</Name>
+      <LocationName>Cherbones</LocationName>
+      <Station>Chalker Landing</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Alliance</Allegiance>
+      <LastKnownCost>12550</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Chi Eridani Marine Paste</Name>
+      <LocationName>Chi Eridani</LocationName>
+      <Station>Steve Masters station</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>784</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Coquim Spongiform Victuals</Name>
+      <LocationName>Coquim</LocationName>
+      <Station>Hirayama Installation</Station>
+      <StationDistance>606ls</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>255</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Damna Carapaces</Name>
+      <LocationName>Damna</LocationName>
+      <Station>Nemere Market</Station>
+      <StationDistance>2532ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>315</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Motrona Experience Jelly</Name>
+      <LocationName>Dea Motrona</LocationName>
+      <Station>Pinzon Dock</Station>
+      <StationDistance>1700000ls</StationDistance>
+      <Allegiance>Alliance</Allegiance>
+      <LastKnownCost>7420</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Delta Phoenicis Palms</Name>
+      <LocationName>Delta Phoenicis</LocationName>
+      <Station>Trading Post</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>412</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Deuringas Truffles</Name>
+      <LocationName>Deuringas</LocationName>
+      <Station>Shukor Hub</Station>
+      <StationDistance>798ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>1892</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Diso Ma Corn</Name>
+      <LocationName>Diso</LocationName>
+      <Station>Shifnalport</Station>
+      <StationDistance>284ls</StationDistance>
+      <Allegiance>Alliance</Allegiance>
+      <LastKnownCost>180</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Eleu Thermals</Name>
+      <LocationName>Eleu</LocationName>
+      <Station>Finney Dock</Station>
+      <StationDistance>333ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>873</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Indi Bourbon</Name>
+      <LocationName>Epsilon Indi</LocationName>
+      <Station>Mansfield Orbiter</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>978</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Eranin Pearl Whiskey</Name>
+      <LocationName>Eranin</LocationName>
+      <Station>Azeban City</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>1620</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Eshu Umbrellas</Name>
+      <LocationName>Eshu</LocationName>
+      <Station>Shajn Terminal</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>2050</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Esuseku Caviar</Name>
+      <LocationName>Esuseku</LocationName>
+      <Station>Savinykh Orbital</Station>
+      <StationDistance>275ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>2450</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Ethgreze Tea Buds</Name>
+      <LocationName>Ethgreze</LocationName>
+      <Station>Bloch Station</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>3261</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Fujin Tea</Name>
+      <LocationName>Fujin</LocationName>
+      <Station>Futen Starport</Station>
+      <StationDistance>559ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>1003</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Geawen Dance Dust</Name>
+      <LocationName>Geawen</LocationName>
+      <Station>Obruchev Legacy</Station>
+      <StationDistance>426261ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>1022</LastKnownCost>
+    </RareGood>
+    <!--<RareGood>
+      <Name>Pantaa Prayer Sticks</Name>
+      <LocationName>George Pantazis</LocationName>
+      <Station>Zakam Platform</Station>
+      <StationDistance>45ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>1827</LastKnownCost>
+    </RareGood>-->
+    <RareGood>
+      <Name>Gerasian Gueuze Beer</Name>
+      <LocationName>Geras</LocationName>
+      <Station>Yurchikhin Port</Station>
+      <StationDistance>1052931ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>456</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Goman Yaupon Coffee</Name>
+      <LocationName>Goman</LocationName>
+      <Station>Gustav Sporer Port</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>1451</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Haidne Black Brew</Name>
+      <LocationName>Haiden</LocationName>
+      <Station>Searfoss Enterprise</Station>
+      <StationDistance>561080ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>1347</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Havasupai Dream Catcher</Name>
+      <LocationName>Havasupai</LocationName>
+      <Station>Lovelace Port</Station>
+      <StationDistance>601314ly</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>9636</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Live Hecate Sea Worms</Name>
+      <LocationName>Hecate</LocationName>
+      <Station>RJH1972</Station>
+      <StationDistance>525ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>1190</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Ceremonial Heike Tea</Name>
+      <LocationName>Heike</LocationName>
+      <Station>Brunel City</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>1920</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Helvetitj Pearls</Name>
+      <LocationName>Helvetitj</LocationName>
+      <Station>Friend Orbital</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>1810</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>HIP 10175 Bush Meat</Name>
+      <LocationName>HIP 10175</LocationName>
+      <Station>Stefanyshyn-Piper Station</Station>
+      <StationDistance>4850ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>2105</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>HIP Proto-Squid</Name>
+      <LocationName>HIP 41181</LocationName>
+      <Station>Andersson Station</Station>
+      <StationDistance>536714ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>1488</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Burnham Bile Distillate</Name>
+      <LocationName>HIP 59533</LocationName>
+      <Station>Burnham Beacon</Station>
+      <StationDistance>529600ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>806</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Holva Duelling Blades</Name>
+      <LocationName>Holva</LocationName>
+      <Station>Kreutz Orbital</Station>
+      <StationDistance>22000ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>6518</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>HR 7221 Wheat</Name>
+      <LocationName>HR 7221</LocationName>
+      <Station>Veron City</Station>
+      <StationDistance>1886ls</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>415</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Giant Irukama Snails</Name>
+      <LocationName>Irukama</LocationName>
+      <Station>Blaauw City</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>1810</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Jaradharre Puzzle Box</Name>
+      <LocationName>Jaradharre</LocationName>
+      <Station>Gohar Station</Station>
+      <StationDistance>526178ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>12706</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Jaroua Rice</Name>
+      <LocationName>Jaroua</LocationName>
+      <Station>Mccool City</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>0</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Kachirigin Filter Leeches</Name>
+      <LocationName>Kachirigin</LocationName>
+      <Station>Nowak Orbital</Station>
+      <StationDistance>340ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>473</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Kamitra Cigars</Name>
+      <LocationName>Kamitra</LocationName>
+      <Station>Hammel Terminal</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>6218</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Kamorin Historic Weapons</Name>
+      <LocationName>Kamorin</LocationName>
+      <Station>Godwin Vision</Station>
+      <StationDistance>445ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>2678</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Onion Head</Name>
+      <LocationName>Kappa Fornacis</LocationName>
+      <Station>Harvestport</Station>
+      <StationDistance>918ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>775</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Karetii Couture</Name>
+      <LocationName>Karetii</LocationName>
+      <Station>Sinclair Platform</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>5225</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Karsuki Locusts</Name>
+      <LocationName>Karsuki Ti</LocationName>
+      <Station>West Market</Station>
+      <StationDistance>28ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>915</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Kinago Violins</Name>
+      <LocationName>Kinago</LocationName>
+      <Station>Fozard Ring</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>7279</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Kongga Ale</Name>
+      <LocationName>Kongga</LocationName>
+      <Station>Laplace Ring</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>585</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Koro Kung Pellets</Name>
+      <LocationName>Korro Kung</LocationName>
+      <Station>Lonchakov Orbital</Station>
+      <StationDistance>622040ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>220</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Lavian Brandy</Name>
+      <LocationName>Lave</LocationName>
+      <Station>Lave Station</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Alliance</Allegiance>
+      <LastKnownCost>3500</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Leestian Evil Juice</Name>
+      <LocationName>Leesti</LocationName>
+      <Station>George Lucas</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Alliance</Allegiance>
+      <LastKnownCost>334</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Azure Milk</Name>
+      <LocationName>Leesti</LocationName>
+      <Station>George Lucas</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Alliance</Allegiance>
+      <LastKnownCost>3010</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Void Extract Coffee</Name>
+      <LocationName>LFT 1421</LocationName>
+      <Station>Ehrlich Orbital</Station>
+      <StationDistance>773000ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>2357</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Mechucos High Tea</Name>
+      <LocationName>Mechucos</LocationName>
+      <Station>Brandenstein Port</Station>
+      <StationDistance>534137ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>1345</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Medb Starlube</Name>
+      <LocationName>Medb</LocationName>
+      <Station>Vela Dock</Station>
+      <StationDistance>1686844ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>416</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Mokojing Beast Feast</Name>
+      <LocationName>Mokojing</LocationName>
+      <Station>Noli Terminal</Station>
+      <StationDistance>539400ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>2681</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Momus Bog Spaniel</Name>
+      <LocationName>Momus Reach</LocationName>
+      <Station>Tartarus Point</Station>
+      <StationDistance>420ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>1825</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Mukusubii Chitin-os</Name>
+      <LocationName>Mukusubii</LocationName>
+      <Station>Ledyard Dock</Station>
+      <StationDistance>505430ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>661</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Mulachi Giant Fungus</Name>
+      <LocationName>Mulachi</LocationName>
+      <Station>Clark Terminal</Station>
+      <StationDistance>690000ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>86</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Neritus Berries</Name>
+      <LocationName>Neritus</LocationName>
+      <Station>Toll Ring</Station>
+      <StationDistance>524ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>850</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Ngadandari Fire Opals</Name>
+      <LocationName>Ngadandari</LocationName>
+      <Station>Consolmagno Horizons</Station>
+      <StationDistance>502357ls</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>16028</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Nguna Modern Antiques</Name>
+      <LocationName>Nguna</LocationName>
+      <Station>Biggle Hub</Station>
+      <StationDistance>1870ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>930</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Njangari Saddles</Name>
+      <LocationName>Njangari</LocationName>
+      <Station>Lee Hub</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>0</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Ochoeng Chillies</Name>
+      <LocationName>Ochoeng</LocationName>
+      <Station>Roddenberry Gateway</Station>
+      <StationDistance>484ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>998</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Orrerian Vicious Brew</Name>
+      <LocationName>Orrere</LocationName>
+      <Station>Sharon Lee Free Market</Station>
+      <StationDistance>961ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>533</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Albino Quechua Mammoth Meat</Name>
+      <LocationName>Quechua</LocationName>
+      <Station>Crown Ring</Station>
+      <StationDistance>120ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>2538</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Rajukru Multi-Stoves</Name>
+      <LocationName>Rajukru</LocationName>
+      <Station>Snyder Terminal</Station>
+      <StationDistance>117ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>682</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Rapa Bao Snake Skins</Name>
+      <LocationName>Rapa Bao</LocationName>
+      <Station>Flagg Gateway</Station>
+      <StationDistance>2338ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>550</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Rusani Old Smokey</Name>
+      <LocationName>Rusani</LocationName>
+      <Station>Fernandes Market</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>5810</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Sanuma Decorative Meat</Name>
+      <LocationName>Sanuma</LocationName>
+      <Station>Dunyach Gateway</Station>
+      <StationDistance>6000ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>860</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Waters of Shintara</Name>
+      <LocationName>Shinrarta Dezhra</LocationName>
+      <Station>Jameson Memorial</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>7495</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Tarach Spice</Name>
+      <LocationName>Tarach Tor</LocationName>
+      <Station>Tranquillity</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>1056</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Tanmark Tranquil Tea</Name>
+      <LocationName>Tanmark</LocationName>
+      <Station>Cassie-L-Peia</Station>
+      <StationDistance>414ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>1814</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Thrutis Cream</Name>
+      <LocationName>Thrutis</LocationName>
+      <Station>Kingsbury Dock</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>925</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Tiolce Waste 2 Paste</Name>
+      <LocationName>Tiolce</LocationName>
+      <Station>Gordon Terminal</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>1153</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Toxandji Virocide</Name>
+      <LocationName>Toxandji</LocationName>
+      <Station>Tsunenaga Orbital</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>535</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Uszaian Tree Grub</Name>
+      <LocationName>Uszaa</LocationName>
+      <Station>Guest Installation</Station>
+      <StationDistance>4350ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>965</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Utgaroar Millennial Eggs</Name>
+      <LocationName>Utgaroar</LocationName>
+      <Station>Fort Klarix</Station>
+      <StationDistance>171ls</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>1795</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Uzumoku Low-G Wings</Name>
+      <LocationName>Uzumoku</LocationName>
+      <Station>Sverdrup Ring</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>8496</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Vanayequi Ceratomorpha Fur</Name>
+      <LocationName>Vanayequi</LocationName>
+      <Station>Clauss Hub</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>615</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Vega Slimweed</Name>
+      <LocationName>Vega</LocationName>
+      <Station>Taylor City</Station>
+      <StationDistance>1100ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>2398</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Vidavantian Lace</Name>
+      <LocationName>Vidavanta</LocationName>
+      <Station>Lee Mines</Station>
+      <StationDistance>556882ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>6771</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Volkhab Bee Drones</Name>
+      <LocationName>Volkhab</LocationName>
+      <Station>Vernadsky Dock</Station>
+      <StationDistance>408ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>3262</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Wolf Fesh</Name>
+      <LocationName>Wolf 1301</LocationName>
+      <Station>Saunders's Dive</Station>
+      <StationDistance>415ls</StationDistance>
+      <Allegiance>Independent</Allegiance>
+      <LastKnownCost>712</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Wheemete Wheat Cakes</Name>
+      <LocationName>Wheemete</LocationName>
+      <Station>Eisinga Enterprise</Station>
+      <StationDistance>551628ls</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>262</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Witchhaul Kobe Beef</Name>
+      <LocationName>Witchhaul</LocationName>
+      <Station>Hornby Terminal</Station>
+      <StationDistance>219ls</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>4520</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Wuthielo Ku Froth</Name>
+      <LocationName>Wuthielo Ku</LocationName>
+      <Station>Tarter Dock</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>420</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Xihe Biomorphic Companions</Name>
+      <LocationName>Xihe</LocationName>
+      <Station>Zhen Dock</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Unknown</Allegiance>
+      <LastKnownCost>4482</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Yaso Kondi Leaf</Name>
+      <LocationName>Yaso Kondi</LocationName>
+      <Station>Wheeler Market</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Empire</Allegiance>
+      <LastKnownCost>6060</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Leathery Eggs</Name>
+      <LocationName>Zaonce</LocationName>
+      <Station>Ridley Scott</Station>
+      <StationDistance>Unknown</StationDistance>
+      <Allegiance>Alliance</Allegiance>
+      <LastKnownCost>23115</LastKnownCost>
+    </RareGood>
+    <RareGood>
+      <Name>Zeessze Ant Grub Glue</Name>
+      <LocationName>Zeessze</LocationName>
+      <Station>Nicollier Hanger</Station>
+      <StationDistance>489ly</StationDistance>
+      <Allegiance>Federation</Allegiance>
+      <LastKnownCost>380</LastKnownCost>
+    </RareGood>
+  </rares>
+</RareCache>

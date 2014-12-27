@@ -89,7 +89,7 @@
             this.ResultsView.FullRowSelect = true;
             this.ResultsView.Location = new System.Drawing.Point(285, 10);
             this.ResultsView.Name = "ResultsView";
-            this.ResultsView.Size = new System.Drawing.Size(603, 567);
+            this.ResultsView.Size = new System.Drawing.Size(840, 567);
             this.ResultsView.TabIndex = 4;
             this.ResultsView.UseCompatibleStateImageBehavior = false;
             this.ResultsView.View = System.Windows.Forms.View.Details;
@@ -163,7 +163,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(902, 587);
+            this.ClientSize = new System.Drawing.Size(1139, 587);
             this.Controls.Add(this.RouteButton);
             this.Controls.Add(this.DestinationSystem);
             this.Controls.Add(this.label3);
