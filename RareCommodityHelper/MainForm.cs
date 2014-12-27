@@ -122,27 +122,11 @@ namespace RareCommodityHelper
                 newItem.Text = rare.LocationName;
                 newItem.SubItems.Add(rare.Station);
                 newItem.SubItems.Add(rare.Name);
-                newItem.SubItems.Add(dest.Distance.ToString());
+                newItem.SubItems.Add(dest.Distance.ToString("0.00"));
                 ResultsView.Items.Add(newItem);
             }
 
             ResultsView.ItemSelectionChanged += SetNewDestination;
-        }
-
-        private void SetCurrentLocation(object sender, EventArgs e)
-        {
-            if (ResultsView.SelectedItems.Count > 0)
-            {
-                CurrentSystem.Text = ResultsView.SelectedItems[0].Text;
-            }
-        }
-
-        private void SetNewDestination(object sender, EventArgs e)
-        {
-            if (ResultsView.SelectedItems.Count > 0)
-            {
-                DestinationSystem.Text = ResultsView.SelectedItems[0].Text;
-            }
         }
 
         // Compute a path from the player's current system to the selected destination system
@@ -187,9 +171,9 @@ namespace RareCommodityHelper
                 travelled += distance;
                 ListViewItem newItem = new ListViewItem();
                 newItem.Text = n.Local.Name;
-                newItem.SubItems.Add(distance.ToString());
-                newItem.SubItems.Add(travelled.ToString());
-                newItem.SubItems.Add(n.HScore.ToString());
+                newItem.SubItems.Add(distance.ToString("0.00"));
+                newItem.SubItems.Add(travelled.ToString("0.00"));
+                newItem.SubItems.Add(n.HScore.ToString("0.00"));
                 ResultsView.Items.Add(newItem);
             }
             ResultsView.ItemSelectionChanged += SetCurrentLocation;
@@ -219,6 +203,21 @@ namespace RareCommodityHelper
             RouteButton.Enabled = !isLoading;
             LoadProgressBar.Visible = isLoading;
             LoadProgressLabel.Visible = isLoading;
+        }
+        private void SetCurrentLocation(object sender, EventArgs e)
+        {
+            if (ResultsView.SelectedItems.Count > 0)
+            {
+                CurrentSystem.Text = ResultsView.SelectedItems[0].Text;
+            }
+        }
+
+        private void SetNewDestination(object sender, EventArgs e)
+        {
+            if (ResultsView.SelectedItems.Count > 0)
+            {
+                DestinationSystem.Text = ResultsView.SelectedItems[0].Text;
+            }
         }
     }
 }
