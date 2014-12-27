@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using System.Xml.Serialization;
 
 namespace RareCommodityHelper
 {
@@ -44,8 +42,8 @@ namespace RareCommodityHelper
             this.FormClosing += OnExit;
 
             // Load previous settings
-            Settings settings = LoadSettings();
-            if (settings == null)
+            Settings settings;
+            if (!LocalData<Settings>.LoadLocalData("Settings.xml", out settings))
             {
                 settings = new Settings();
             }
@@ -65,7 +63,7 @@ namespace RareCommodityHelper
             settings.JumpDistance = MaxJumpDistance.Text;
             settings.CurrentSystem = CurrentSystem.Text;
             settings.DestinationSystem = DestinationSystem.Text;
-            SaveSettings(settings);
+            LocalData<Settings>.SaveLocalData(settings, "Settings.xml");
         }
 
         private async void UpdateSystems()
@@ -221,45 +219,6 @@ namespace RareCommodityHelper
             RouteButton.Enabled = !isLoading;
             LoadProgressBar.Visible = isLoading;
             LoadProgressLabel.Visible = isLoading;
-        }
-        
-        // Serialize settings as XML and squirrel them away
-        private void SaveSettings(Settings settings)
-        {
-            string filename = SettingsLocation();
-            if (File.Exists(filename))
-            {
-                File.Delete(filename);
-            }
-            FileStream stream = File.OpenWrite(filename);
-            XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-            serializer.Serialize(stream, settings);
-            stream.Close();
-        }
-
-        // Load previously squirreled away settings
-        private Settings LoadSettings()
-        {
-            string filename = SettingsLocation();
-            if (File.Exists(filename))
-            {
-                FileStream stream = File.OpenRead(filename);
-                XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-                Settings ret = (Settings)serializer.Deserialize(stream);
-                stream.Close();
-                return ret;
-            }
-            return null;
-        }
-    
-        private string SettingsLocation()
-        {
-            string dirPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "RareHelper");
-            if (!Directory.Exists(dirPath))
-            {
-                Directory.CreateDirectory(dirPath);
-            }
-            return Path.Combine(dirPath, "Settings.xml");
         }
     }
 }

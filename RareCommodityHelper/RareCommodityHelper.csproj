@@ -59,6 +59,7 @@
     <Compile Include="RareGood.cs" />
     <Compile Include="Route.cs" />
     <Compile Include="StarCoordinator.cs" />
+    <Compile Include="Util.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

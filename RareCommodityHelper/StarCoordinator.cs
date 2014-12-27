@@ -1,8 +1,6 @@
 ﻿using System.Net.Http;
 using System.Web.Script.Serialization;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
-using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -103,10 +101,10 @@ public class StarCoordinator
     public static async Task<Dictionary<string,StarSystem>> FetchSystems()
     {
         // Get existing data from the cache
-        CachedData preexistingData = LoadSystemsFromDisk();
+        CachedData preexistingData;
         Dictionary<string, StarSystem> ret = new Dictionary<string, StarSystem>();
         string lastSynced = "2014-01-01";
-        if (preexistingData != null)
+        if (LocalData<CachedData>.LoadLocalData("EDSystemCache.xml", out preexistingData))
         {
             lastSynced = preexistingData.dateSynced;
             ret = preexistingData.GetDictionary();
@@ -132,7 +130,7 @@ public class StarCoordinator
         // Save the new cache
         CachedData newCache = new CachedData(ret);
         newCache.dateSynced = string.Format("{0}-{1}-{2}", System.DateTime.Now.Year, System.DateTime.Now.Month, System.DateTime.Now.Day);
-        SaveSystemsToDisk(newCache);
+        LocalData<CachedData>.SaveLocalData(newCache, "EDSystemCache.xml");
 
         return ret;
     }
@@ -156,32 +154,5 @@ public class StarCoordinator
         string responseString = await response.Content.ReadAsStringAsync();
         JSONResponse parsed = serializer.Deserialize<JSONResponse>(responseString);
         return parsed.d.systems;
-    }
-
-    private static void SaveSystemsToDisk(CachedData cache)
-    {
-        FileStream stream = File.OpenWrite(CacheFilename());
-        XmlSerializer serializer = new XmlSerializer(typeof(CachedData));
-        serializer.Serialize(stream, cache);
-        stream.Close();
-    }
-
-    private static CachedData LoadSystemsFromDisk()
-    {
-        string filename = CacheFilename();
-        if(File.Exists(filename))
-        {
-            FileStream stream = File.OpenRead(filename);
-            XmlSerializer serializer = new XmlSerializer(typeof(CachedData));
-            CachedData ret = (CachedData)serializer.Deserialize(stream);
-            stream.Close();
-            return ret;
-        }
-        return null;
-    }
-
-    private static string CacheFilename()
-    {
-        return Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), "RareHelper", "SystemCache.xml");
     }
 }
