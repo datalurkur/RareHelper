@@ -32,13 +32,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.MaxJumpDistance = new System.Windows.Forms.TextBox();
-            this.ResultsView = new System.Windows.Forms.ListView();
+            this.RareResults = new System.Windows.Forms.ListView();
             this.ComputeButton = new System.Windows.Forms.Button();
             this.LoadProgressBar = new System.Windows.Forms.ProgressBar();
             this.LoadProgressLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.DestinationSystem = new System.Windows.Forms.ComboBox();
             this.RouteButton = new System.Windows.Forms.Button();
+            this.ResultsTabControl = new System.Windows.Forms.TabControl();
+            this.RareResultsTab = new System.Windows.Forms.TabPage();
+            this.RouteResultsTab = new System.Windows.Forms.TabPage();
+            this.RouteResults = new System.Windows.Forms.ListView();
+            this.ResultsTabControl.SuspendLayout();
+            this.RareResultsTab.SuspendLayout();
+            this.RouteResultsTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // CurrentSystem
@@ -78,21 +85,19 @@
             this.MaxJumpDistance.Size = new System.Drawing.Size(201, 18);
             this.MaxJumpDistance.TabIndex = 3;
             // 
-            // ResultsView
+            // RareResults
             // 
-            this.ResultsView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ResultsView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ResultsView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.ResultsView.ForeColor = System.Drawing.Color.Silver;
-            this.ResultsView.FullRowSelect = true;
-            this.ResultsView.Location = new System.Drawing.Point(285, 10);
-            this.ResultsView.Name = "ResultsView";
-            this.ResultsView.Size = new System.Drawing.Size(840, 567);
-            this.ResultsView.TabIndex = 4;
-            this.ResultsView.UseCompatibleStateImageBehavior = false;
-            this.ResultsView.View = System.Windows.Forms.View.Details;
+            this.RareResults.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.RareResults.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.RareResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RareResults.ForeColor = System.Drawing.Color.Silver;
+            this.RareResults.FullRowSelect = true;
+            this.RareResults.Location = new System.Drawing.Point(3, 3);
+            this.RareResults.Name = "RareResults";
+            this.RareResults.Size = new System.Drawing.Size(745, 634);
+            this.RareResults.TabIndex = 4;
+            this.RareResults.UseCompatibleStateImageBehavior = false;
+            this.RareResults.View = System.Windows.Forms.View.Details;
             // 
             // ComputeButton
             // 
@@ -109,7 +114,7 @@
             // 
             this.LoadProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LoadProgressBar.ForeColor = System.Drawing.Color.Silver;
-            this.LoadProgressBar.Location = new System.Drawing.Point(14, 558);
+            this.LoadProgressBar.Location = new System.Drawing.Point(14, 661);
             this.LoadProgressBar.Name = "LoadProgressBar";
             this.LoadProgressBar.Size = new System.Drawing.Size(204, 19);
             this.LoadProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
@@ -120,7 +125,7 @@
             // 
             this.LoadProgressLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LoadProgressLabel.AutoSize = true;
-            this.LoadProgressLabel.Location = new System.Drawing.Point(14, 544);
+            this.LoadProgressLabel.Location = new System.Drawing.Point(14, 647);
             this.LoadProgressLabel.Name = "LoadProgressLabel";
             this.LoadProgressLabel.Size = new System.Drawing.Size(180, 11);
             this.LoadProgressLabel.TabIndex = 7;
@@ -157,20 +162,70 @@
             this.RouteButton.Text = "Compute Route";
             this.RouteButton.UseVisualStyleBackColor = true;
             // 
+            // ResultsTabControl
+            // 
+            this.ResultsTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ResultsTabControl.Controls.Add(this.RareResultsTab);
+            this.ResultsTabControl.Controls.Add(this.RouteResultsTab);
+            this.ResultsTabControl.Location = new System.Drawing.Point(236, 13);
+            this.ResultsTabControl.Name = "ResultsTabControl";
+            this.ResultsTabControl.SelectedIndex = 0;
+            this.ResultsTabControl.Size = new System.Drawing.Size(759, 665);
+            this.ResultsTabControl.TabIndex = 11;
+            // 
+            // RareResultsTab
+            // 
+            this.RareResultsTab.Controls.Add(this.RareResults);
+            this.RareResultsTab.Location = new System.Drawing.Point(4, 21);
+            this.RareResultsTab.Name = "RareResultsTab";
+            this.RareResultsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.RareResultsTab.Size = new System.Drawing.Size(751, 640);
+            this.RareResultsTab.TabIndex = 0;
+            this.RareResultsTab.Text = "Rare Distances";
+            this.RareResultsTab.UseVisualStyleBackColor = true;
+            this.RareResultsTab.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // RouteResultsTab
+            // 
+            this.RouteResultsTab.Controls.Add(this.RouteResults);
+            this.RouteResultsTab.Location = new System.Drawing.Point(4, 21);
+            this.RouteResultsTab.Name = "RouteResultsTab";
+            this.RouteResultsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.RouteResultsTab.Size = new System.Drawing.Size(751, 640);
+            this.RouteResultsTab.TabIndex = 1;
+            this.RouteResultsTab.Text = "Route";
+            this.RouteResultsTab.UseVisualStyleBackColor = true;
+            // 
+            // RouteResults
+            // 
+            this.RouteResults.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.RouteResults.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.RouteResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RouteResults.ForeColor = System.Drawing.Color.Silver;
+            this.RouteResults.FullRowSelect = true;
+            this.RouteResults.Location = new System.Drawing.Point(3, 3);
+            this.RouteResults.Name = "RouteResults";
+            this.RouteResults.Size = new System.Drawing.Size(745, 634);
+            this.RouteResults.TabIndex = 5;
+            this.RouteResults.UseCompatibleStateImageBehavior = false;
+            this.RouteResults.View = System.Windows.Forms.View.Details;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 11F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1139, 587);
+            this.ClientSize = new System.Drawing.Size(1007, 690);
+            this.Controls.Add(this.ResultsTabControl);
             this.Controls.Add(this.RouteButton);
             this.Controls.Add(this.DestinationSystem);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.LoadProgressLabel);
             this.Controls.Add(this.LoadProgressBar);
             this.Controls.Add(this.ComputeButton);
-            this.Controls.Add(this.ResultsView);
             this.Controls.Add(this.MaxJumpDistance);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -180,6 +235,9 @@
             this.Name = "MainForm";
             this.Text = "Rare Commodity Helper";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.ResultsTabControl.ResumeLayout(false);
+            this.RareResultsTab.ResumeLayout(false);
+            this.RouteResultsTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,13 +249,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox MaxJumpDistance;
-        private System.Windows.Forms.ListView ResultsView;
+        private System.Windows.Forms.ListView RareResults;
         private System.Windows.Forms.Button ComputeButton;
         private System.Windows.Forms.ProgressBar LoadProgressBar;
         private System.Windows.Forms.Label LoadProgressLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox DestinationSystem;
         private System.Windows.Forms.Button RouteButton;
+        private System.Windows.Forms.TabControl ResultsTabControl;
+        private System.Windows.Forms.TabPage RareResultsTab;
+        private System.Windows.Forms.TabPage RouteResultsTab;
+        private System.Windows.Forms.ListView RouteResults;
     }
 }
 

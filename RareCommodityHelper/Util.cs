@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml.Serialization;
 using System.Reflection;
+using System.Windows.Forms;
+using System.Collections;
 
 class LocalData<T>
 {
@@ -65,5 +68,50 @@ class LocalData<T>
     public static bool LoadRunData(string fileName, out T ret)
     {
         return LoadData(ExecutableDir(), fileName, out ret);
+    }
+}
+
+class StringSorter : IComparer
+{
+    public int Column;
+    public bool Ascending = true;
+
+    public StringSorter(int c, bool a)
+    {
+        Column = c;
+        Ascending = a;
+    }
+
+    public int Compare(object x, object y)
+    {
+        string a = ((ListViewItem)x).SubItems[Column].Text;
+        string b = ((ListViewItem)y).SubItems[Column].Text;
+        return Ascending ? string.Compare(a, b) : string.Compare(b, a);
+    }
+}
+
+class FloatSorter : IComparer
+{
+    public int Column;
+    public bool Ascending = true;
+
+    public FloatSorter(int c, bool a)
+    {
+        Column = c;
+        Ascending = a;
+    }
+
+    public int Compare(object x, object y)
+    {
+        double a = Convert.ToDouble(((ListViewItem)x).SubItems[Column].Text);
+        double b = Convert.ToDouble(((ListViewItem)y).SubItems[Column].Text);
+        if (a == b) { return 0; }
+        if (!Ascending)
+        {
+            double t = a;
+            a = b;
+            b = t;
+        }
+        return (a > b) ? 1 : -1;
     }
 }

@@ -28,6 +28,8 @@ namespace RareCommodityHelper
 
         private Galaxy galaxy;
         private Dictionary<string,RareGood> rareData;
+        private int rareColumn = 0;
+        private bool rareAscending = true;
 
         public MainForm()
         {
@@ -39,6 +41,26 @@ namespace RareCommodityHelper
             // Setup bindings
             ComputeButton.Click += ComputeRareGoodsDistances;
             RouteButton.Click += ComputePath;
+
+            // Rare tab
+            RareResults.ItemSelectionChanged += SetNewDestination;
+            RareResults.Columns.Add("System", 120);
+            RareResults.Columns.Add("Station", 150);
+            RareResults.Columns.Add("Commodity", 200);
+            RareResults.Columns.Add("Distance", 70);
+            RareResults.Columns.Add("Station Distance", 70);
+            RareResults.Columns.Add("Last Known Price", 50);
+            RareResults.Columns.Add("Station Allegiance", 90);
+            RareResults.ColumnClick += SortRareGoodsResults;
+
+            // Route tab
+            RouteResults.ItemSelectionChanged += SetCurrentLocation;
+            RouteResults.Columns.Add("System", 150);
+            RouteResults.Columns.Add("#", 50);
+            RouteResults.Columns.Add("Jump Dist.", 80);
+            RouteResults.Columns.Add("Travelled", 80);
+            RouteResults.Columns.Add("Dist. To Target", 80);
+            
             this.FormClosing += OnExit;
 
             // Load previous settings
@@ -105,16 +127,7 @@ namespace RareCommodityHelper
                 return;
             }
 
-            ResultsView.ItemSelectionChanged -= SetCurrentLocation;
-            ResultsView.Columns.Clear();
-            ResultsView.Columns.Add("System", 120);
-            ResultsView.Columns.Add("Station", 150);
-            ResultsView.Columns.Add("Commodity", 200);
-            ResultsView.Columns.Add("Distance", 70);
-            ResultsView.Columns.Add("Station Distance", 70);
-            ResultsView.Columns.Add("Last Known Price", 50);
-            ResultsView.Columns.Add("Station Allegiance", 90);
-            ResultsView.Items.Clear();
+            RareResults.Items.Clear();
 
             List<Destination> sorted;
             galaxy.SortRaresByDistance(CurrentSystem.Text, rareData.Values.ToList(), out sorted);
@@ -129,10 +142,35 @@ namespace RareCommodityHelper
                 newItem.SubItems.Add(rare.StationDistance);
                 newItem.SubItems.Add(rare.LastKnownCost.ToString());
                 newItem.SubItems.Add(rare.Allegiance);
-                ResultsView.Items.Add(newItem);
+                RareResults.Items.Add(newItem);
+            }
+        }
+
+        private void SortRareGoodsResults(object sender, System.Windows.Forms.ColumnClickEventArgs args)
+        {
+            bool ascending = false;
+            if (args.Column == rareColumn)
+            {
+                rareAscending = !rareAscending;
+                ascending = rareAscending;
+            }
+            else
+            {
+                rareAscending = ascending;
             }
 
-            ResultsView.ItemSelectionChanged += SetNewDestination;
+            switch (args.Column)
+            {
+                case 3:
+                case 5:
+                    RareResults.ListViewItemSorter = new FloatSorter(args.Column, ascending);
+                    break;
+                default:
+                    RareResults.ListViewItemSorter = new StringSorter(args.Column, ascending);
+                    break;
+            }
+            RareResults.Sort();
+            rareColumn = args.Column;
         }
 
         // Compute a path from the player's current system to the selected destination system
@@ -162,27 +200,21 @@ namespace RareCommodityHelper
                 return;
             }
 
-            ResultsView.ItemSelectionChanged -= SetNewDestination;
-            ResultsView.Columns.Clear();
-            ResultsView.Columns.Add("System", 150);
-            ResultsView.Columns.Add("Jump Dist.", 80);
-            ResultsView.Columns.Add("Travelled", 80);
-            ResultsView.Columns.Add("Dist. To Target", 80);
-
-            ResultsView.Items.Clear();
+            RouteResults.Items.Clear();
             float travelled = 0.0f;
-            foreach (RouteNode n in path)
+            for (int i = 0; i < path.Count; i++)
             {
+                RouteNode n = path[i];
                 float distance = n.TraversalCost;
                 travelled += distance;
                 ListViewItem newItem = new ListViewItem();
                 newItem.Text = n.Local.Name;
+                newItem.SubItems.Add(i.ToString());
                 newItem.SubItems.Add(distance.ToString("0.00"));
                 newItem.SubItems.Add(travelled.ToString("0.00"));
                 newItem.SubItems.Add(n.HScore.ToString("0.00"));
-                ResultsView.Items.Add(newItem);
+                RouteResults.Items.Add(newItem);
             }
-            ResultsView.ItemSelectionChanged += SetCurrentLocation;
         }
 
         // Just a helper method to make sure our combo boxes have valid values
@@ -212,18 +244,23 @@ namespace RareCommodityHelper
         }
         private void SetCurrentLocation(object sender, EventArgs e)
         {
-            if (ResultsView.SelectedItems.Count > 0)
+            if (RareResults.SelectedItems.Count > 0)
             {
-                CurrentSystem.Text = ResultsView.SelectedItems[0].Text;
+                CurrentSystem.Text = RareResults.SelectedItems[0].Text;
             }
         }
 
         private void SetNewDestination(object sender, EventArgs e)
         {
-            if (ResultsView.SelectedItems.Count > 0)
+            if (RareResults.SelectedItems.Count > 0)
             {
-                DestinationSystem.Text = ResultsView.SelectedItems[0].Text;
+                DestinationSystem.Text = RareResults.SelectedItems[0].Text;
             }
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
