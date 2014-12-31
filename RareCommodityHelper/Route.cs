@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class PathNode
 {
@@ -146,8 +147,43 @@ public class PathPlanner
     }
 }
 
+class RouteNode
+{
+    public RareGood Rare;
+    public Coords Position;
+    public float DistanceFromPlane;
+    public float DistanceFromPrev;
+    public float DistanceFromNext;
+    public float DistanceFromSphere;
+    public float DistanceFromCross;
+
+    public float SortingMetric;
+    public RouteNode(RareGood r, Coords center, Coords radiusNormal, Coords radiusPoint, RareGood prev, RareGood next, RareGood cross, float ideal)
+    {
+        Rare = r;
+        Position = r.Location.Position;
+        DistanceFromSphere = Position.Distance(center);
+        DistanceFromPrev = Rare.Distance(prev);
+        DistanceFromPlane = (radiusNormal.X * (Position.X - radiusPoint.X)) + (radiusNormal.Y * (Position.Y - radiusPoint.Y)) + (radiusNormal.Z * (Position.Z - radiusPoint.Z));
+
+        SortingMetric = DistanceFromSphere + DistanceFromPrev + DistanceFromPlane;
+        if (next != null)
+        {
+            DistanceFromNext = Rare.Distance(next);
+            SortingMetric += DistanceFromNext;
+        }
+        if (cross != null)
+        {
+            DistanceFromCross = Math.Abs(ideal - Rare.Distance(cross));
+            SortingMetric += DistanceFromCross;
+        }
+    }
+}
+
 public class RoutePlanner
 {
+    private const float Pi = 3.14159f;
+    private const float TwoPi = Pi * 2.0f;
     private Dictionary<string, RareGood> nodes;
 
     public RoutePlanner(List<StarSystem> systems, List<RareGood> rares, float jumpDistance)
@@ -181,25 +217,52 @@ public class RoutePlanner
 
         // Describe a sphere that contains both the starting good and mid good
         Coords halfOffset = (midGood.Location.Position - startingGood.Location.Position) / 2.0f;
-        float radius = halfOffset.Magnitude();
         Coords center = startingGood.Location.Position + halfOffset;
 
         // Cull any nodes inside the sphere
         float idealSquared = idealDistance * idealDistance;
         List<RareGood> viableNodes = nodes.Values.Where(r => startingGood.Location.Position.DistanceSquared(center) > idealSquared).ToList();
 
-        // Precompute some values we'll use regularly
-        float arcLength = radius * 3.14f;
-        // Find the first half of the trip
-        for(int i = 0; i < jumpsPerLeg; i++)
+        Coords radiusDir = halfOffset.Normal();
+        float radius = halfOffset.Magnitude();
+        float arcLength = radius * Pi;
+        float idealStep = arcLength / jumpsPerLeg;
+
+        // Prepare initial state
+        viableNodes.Remove(startingGood);
+        viableNodes.Remove(midGood);
+
+        List<RareGood> potentialRoute = new List<RareGood>();
+        potentialRoute.Add(startingGood);
+        RareGood prev = startingGood;
+
+        for(int i = 1; i < jumpsPerLeg * 2; i++)
         {
-            // Compute travel along an arc
-            //float distanceAlongAxis = ((float)i / jumpsPerLeg) * 
-            // Compute a plane perpendicular to the distance 
-            // FIXME
+            if (i == jumpsPerLeg)
+            {
+                prev = midGood;
+                potentialRoute.Add(midGood);
+                continue;
+            }
+
+            float distanceFromCenter = -radius * (float)Math.Sin(Pi * (((float)i / jumpsPerLeg) + 0.5f));
+            Coords pointAlongDiameter = center + (halfOffset * distanceFromCenter);
+
+            RareGood next = null;
+            if (i == jumpsPerLeg - 1) { next = midGood; }
+            else if (i == jumpsPerLeg * 2 - 1) { next = startingGood; }
+            RareGood cross = (i > jumpsPerLeg) ? potentialRoute[i - jumpsPerLeg] : null;
+            List<RouteNode> viableRoutes = viableNodes.Select(n => new RouteNode(n, center, radiusDir, pointAlongDiameter, prev, next, cross, idealDistance)).ToList();
+            viableRoutes.Sort(delegate(RouteNode x, RouteNode y) {
+                return x.SortingMetric > y.SortingMetric ? 1 : -1;
+            });
+
+            prev = viableRoutes.FirstOrDefault().Rare;
+            potentialRoute.Add(prev);
+            viableNodes.Remove(prev);
         }
 
-        route = null;
-        return false;
+        route = potentialRoute;
+        return true;
     }
 }

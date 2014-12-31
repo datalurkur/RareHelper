@@ -2,58 +2,6 @@
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-public class Coords
-{
-    public float X = 0.0f;
-    public float Y = 0.0f;
-    public float Z = 0.0f;
-
-    public static Coords operator -(Coords a, Coords b)
-    {
-        Coords ret = new Coords();
-        ret.X = a.X - b.X;
-        ret.X = a.Y - b.Y;
-        ret.X = a.Z - b.Z;
-        return ret;
-    }
-
-    public static Coords operator +(Coords a, Coords b)
-    {
-        Coords ret = new Coords();
-        ret.X = a.X + b.X;
-        ret.X = a.Y + b.Y;
-        ret.X = a.Z + b.Z;
-        return ret;
-    }
-
-    public static Coords operator /(Coords a, float b)
-    {
-        Coords ret = new Coords();
-        ret.X = a.X / b;
-        ret.X = a.Y / b;
-        ret.X = a.Z / b;
-        return ret;
-    }
-
-    public float Magnitude()
-    {
-        return (float)System.Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
-    }
-
-    public float Distance(Coords other)
-    {
-        return (float)System.Math.Sqrt(DistanceSquared(other));
-    }
-
-    public float DistanceSquared(Coords other)
-    {
-        float xDiff = this.X - other.X,
-              yDiff = this.Y - other.Y,
-              zDiff = this.Z - other.Z;
-        return (xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff);
-    }
-}
-
 public class StarSystem
 {
     public string Name = "";
@@ -102,7 +50,7 @@ public class RareGood
         Station = station;
     }
 
-    public float DistanceTo(RareGood other)
+    public float Distance(RareGood other)
     {
         return Location.Position.Distance(other.Location.Position);
     }

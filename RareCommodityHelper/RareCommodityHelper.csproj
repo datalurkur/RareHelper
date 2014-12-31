@@ -103,6 +103,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coord.cs" />
     <Compile Include="MainForm.cs">
       <SubType>form</SubType>
     </Compile>
