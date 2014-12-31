@@ -192,8 +192,8 @@ namespace RareCommodityHelper
                 return;
             }
 
-            RoutePlanner finder = new RoutePlanner(galaxy.Systems.Values.ToList(), jumpDistance);
-            List<RouteNode> path = finder.FindRoute(CurrentSystem.Text, DestinationSystem.Text);
+            PathPlanner finder = new PathPlanner(galaxy.Systems.Values.ToList(), jumpDistance);
+            List<PathNode> path = finder.FindPath(CurrentSystem.Text, DestinationSystem.Text);
             if (path == null)
             {
                 MessageBox.Show("No route to destination.", "FUCK!", MessageBoxButtons.OK);
@@ -204,7 +204,7 @@ namespace RareCommodityHelper
             float travelled = 0.0f;
             for (int i = 0; i < path.Count; i++)
             {
-                RouteNode n = path[i];
+                PathNode n = path[i];
                 float distance = n.TraversalCost;
                 travelled += distance;
                 ListViewItem newItem = new ListViewItem();
