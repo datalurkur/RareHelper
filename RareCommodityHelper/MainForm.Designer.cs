@@ -38,11 +38,12 @@
             this.LoadProgressLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.DestinationSystem = new System.Windows.Forms.ComboBox();
-            this.RouteButton = new System.Windows.Forms.Button();
+            this.PathButton = new System.Windows.Forms.Button();
             this.ResultsTabControl = new System.Windows.Forms.TabControl();
             this.RareResultsTab = new System.Windows.Forms.TabPage();
             this.RouteResultsTab = new System.Windows.Forms.TabPage();
             this.RouteResults = new System.Windows.Forms.ListView();
+            this.RouteButton = new System.Windows.Forms.Button();
             this.ResultsTabControl.SuspendLayout();
             this.RareResultsTab.SuspendLayout();
             this.RouteResultsTab.SuspendLayout();
@@ -152,15 +153,15 @@
             this.DestinationSystem.Size = new System.Drawing.Size(200, 19);
             this.DestinationSystem.TabIndex = 9;
             // 
-            // RouteButton
+            // PathButton
             // 
-            this.RouteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RouteButton.Location = new System.Drawing.Point(17, 231);
-            this.RouteButton.Name = "RouteButton";
-            this.RouteButton.Size = new System.Drawing.Size(202, 23);
-            this.RouteButton.TabIndex = 10;
-            this.RouteButton.Text = "Compute Route";
-            this.RouteButton.UseVisualStyleBackColor = true;
+            this.PathButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PathButton.Location = new System.Drawing.Point(17, 231);
+            this.PathButton.Name = "PathButton";
+            this.PathButton.Size = new System.Drawing.Size(202, 23);
+            this.PathButton.TabIndex = 10;
+            this.PathButton.Text = "Compute Path";
+            this.PathButton.UseVisualStyleBackColor = true;
             // 
             // ResultsTabControl
             // 
@@ -185,7 +186,6 @@
             this.RareResultsTab.TabIndex = 0;
             this.RareResultsTab.Text = "Rare Distances";
             this.RareResultsTab.UseVisualStyleBackColor = true;
-            this.RareResultsTab.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // RouteResultsTab
             // 
@@ -212,6 +212,16 @@
             this.RouteResults.UseCompatibleStateImageBehavior = false;
             this.RouteResults.View = System.Windows.Forms.View.Details;
             // 
+            // RouteButton
+            // 
+            this.RouteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RouteButton.Location = new System.Drawing.Point(18, 277);
+            this.RouteButton.Name = "RouteButton";
+            this.RouteButton.Size = new System.Drawing.Size(200, 23);
+            this.RouteButton.TabIndex = 12;
+            this.RouteButton.Text = "Compute Route";
+            this.RouteButton.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 11F);
@@ -219,8 +229,9 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1007, 690);
-            this.Controls.Add(this.ResultsTabControl);
             this.Controls.Add(this.RouteButton);
+            this.Controls.Add(this.ResultsTabControl);
+            this.Controls.Add(this.PathButton);
             this.Controls.Add(this.DestinationSystem);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.LoadProgressLabel);
@@ -255,11 +266,12 @@
         private System.Windows.Forms.Label LoadProgressLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox DestinationSystem;
-        private System.Windows.Forms.Button RouteButton;
+        private System.Windows.Forms.Button PathButton;
         private System.Windows.Forms.TabControl ResultsTabControl;
         private System.Windows.Forms.TabPage RareResultsTab;
         private System.Windows.Forms.TabPage RouteResultsTab;
         private System.Windows.Forms.ListView RouteResults;
+        private System.Windows.Forms.Button RouteButton;
     }
 }
 

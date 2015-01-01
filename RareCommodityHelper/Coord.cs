@@ -7,8 +7,8 @@
     {
         Coords ret = new Coords();
         ret.X = a.X - b.X;
-        ret.X = a.Y - b.Y;
-        ret.X = a.Z - b.Z;
+        ret.Y = a.Y - b.Y;
+        ret.Z = a.Z - b.Z;
         return ret;
     }
 
@@ -16,8 +16,8 @@
     {
         Coords ret = new Coords();
         ret.X = a.X + b.X;
-        ret.X = a.Y + b.Y;
-        ret.X = a.Z + b.Z;
+        ret.Y = a.Y + b.Y;
+        ret.Z = a.Z + b.Z;
         return ret;
     }
 
@@ -25,8 +25,8 @@
     {
         Coords ret = new Coords();
         ret.X = a.X / b;
-        ret.X = a.Y / b;
-        ret.X = a.Z / b;
+        ret.Y = a.Y / b;
+        ret.Z = a.Z / b;
         return ret;
     }
 

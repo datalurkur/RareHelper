@@ -184,20 +184,23 @@ public class RoutePlanner
 {
     private const float Pi = 3.14159f;
     private const float TwoPi = Pi * 2.0f;
-    private Dictionary<string, RareGood> nodes;
+    private List<RareGood> rares;
 
-    public RoutePlanner(List<StarSystem> systems, List<RareGood> rares, float jumpDistance)
+    public RoutePlanner(List<RareGood> r, float jumpDistance)
     {
-        foreach(RareGood rare in rares)
-        {
-            nodes.Add(rare.LocationName, rare);
-        }
+        rares = r;
     }
 
-    public List<RareGood> FindRoute(string currentSystem, float idealDistance, int jumpsPerLeg, int attempts)
+    public List<RareGood> FindSpaghetti(StarSystem currentSystem, float idealDistance, int jumpsPerLeg)
     {
+        List<RareGood> route = new List<RareGood>();
+        return route;
+    }
+
+    public List<RareGood> FindRoute(StarSystem currentSystem, float idealDistance, int jumpsPerLeg, int attempts)
+    {
+        RareGood startingGood = rares.OrderBy(r => currentSystem.Distance(r.Location)).FirstOrDefault();
         float sellDistance = idealDistance;
-        RareGood startingGood = nodes[currentSystem];
 
         List<RareGood> ret = null;
         for(int i = 0; i < attempts; i++)
@@ -210,18 +213,20 @@ public class RoutePlanner
         return ret;
     }
 
-    public bool AttemptRoute(RareGood startingGood, float idealDistance, int jumpsPerLeg, out List<RareGood> route)
+    // So wow is this algorithm terrible
+    private bool AttemptRoute(RareGood startingGood, float idealDistance, int jumpsPerLeg, out List<RareGood> route)
     {
         // Select the good that is closest to and above the ideal distance from the starting point
-        RareGood midGood = nodes.Values.Where(r => startingGood.Location.Distance(r.Location) >= idealDistance).OrderBy(r => startingGood.Location.Distance(r.Location)).FirstOrDefault();
+        RareGood midGood = rares.Where(r => startingGood.Location.Distance(r.Location) >= idealDistance).OrderBy(r => startingGood.Location.Distance(r.Location)).FirstOrDefault();
 
         // Describe a sphere that contains both the starting good and mid good
-        Coords halfOffset = (midGood.Location.Position - startingGood.Location.Position) / 2.0f;
+        Coords offset = midGood.Location.Position - startingGood.Location.Position;
+        Coords halfOffset = offset / 2.0f;
         Coords center = startingGood.Location.Position + halfOffset;
 
         // Cull any nodes inside the sphere
         float idealSquared = idealDistance * idealDistance;
-        List<RareGood> viableNodes = nodes.Values.Where(r => startingGood.Location.Position.DistanceSquared(center) > idealSquared).ToList();
+        List<RareGood> viableNodes = rares.Where(r => r.Location.Position.DistanceSquared(center) > idealSquared).ToList();
 
         Coords radiusDir = halfOffset.Normal();
         float radius = halfOffset.Magnitude();
@@ -246,7 +251,7 @@ public class RoutePlanner
             }
 
             float distanceFromCenter = -radius * (float)Math.Sin(Pi * (((float)i / jumpsPerLeg) + 0.5f));
-            Coords pointAlongDiameter = center + (halfOffset * distanceFromCenter);
+            Coords pointAlongDiameter = center + (radiusDir * distanceFromCenter);
 
             RareGood next = null;
             if (i == jumpsPerLeg - 1) { next = midGood; }

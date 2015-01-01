@@ -40,7 +40,8 @@ namespace RareCommodityHelper
         {
             // Setup bindings
             ComputeButton.Click += ComputeRareGoodsDistances;
-            RouteButton.Click += ComputePath;
+            PathButton.Click += ComputePath;
+            RouteButton.Click += ComputeRoute;
 
             // Rare tab
             RareResults.ItemSelectionChanged += SetNewDestination;
@@ -217,6 +218,23 @@ namespace RareCommodityHelper
             }
         }
 
+        private void ComputeRoute(object sender, EventArgs args)
+        {
+            float jumpDistance = 0.0f;
+            try
+            {
+                jumpDistance = (float)Convert.ToDouble(MaxJumpDistance.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid floating point jump distance.", "Fuck!", MessageBoxButtons.OK);
+                return;
+            }
+
+            RoutePlanner planner = new RoutePlanner(rareData.Values.ToList(), jumpDistance);
+            planner.FindRoute(galaxy.Systems["Eranin"], 150.0f, 3, 1);
+        }
+
         // Just a helper method to make sure our combo boxes have valid values
         private bool ValidateComboBox(ComboBox c)
         {
@@ -238,6 +256,7 @@ namespace RareCommodityHelper
             MaxJumpDistance.Enabled = !isLoading;
             ComputeButton.Enabled = !isLoading;
             DestinationSystem.Enabled = !isLoading;
+            PathButton.Enabled = !isLoading;
             RouteButton.Enabled = !isLoading;
             LoadProgressBar.Visible = isLoading;
             LoadProgressLabel.Visible = isLoading;
@@ -256,11 +275,6 @@ namespace RareCommodityHelper
             {
                 DestinationSystem.Text = RareResults.SelectedItems[0].Text;
             }
-        }
-
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
