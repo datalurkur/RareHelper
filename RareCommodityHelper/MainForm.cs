@@ -280,9 +280,14 @@ namespace RareCommodityHelper
                 MessageBox.Show("Please enter a valid number of max jumps.", "Fuck!", MessageBoxButtons.OK);
                 return;
             }
+            if (!ValidateComboBox(CurrentSystem))
+            {
+                return;
+            }
 
             RoutePlanner planner = new RoutePlanner(rareData.Values.ToList(), jumpDistance);
-            List<RareGood> route = planner.FindScatter(galaxy.Systems["Eranin"], idealSellDistance, jumpsPerLeg, maxJumps);
+            StarSystem start = galaxy.Systems[CurrentSystem.Text];
+            List<RareGood> route = planner.FindScatter(start, idealSellDistance, jumpsPerLeg, maxJumps);
 
             RouteResults.Items.Clear();
             for (int i = 0; i < route.Count; i++)
