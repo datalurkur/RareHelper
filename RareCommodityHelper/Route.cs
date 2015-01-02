@@ -191,6 +191,49 @@ public class RoutePlanner
         rares = r;
     }
 
+    public List<RareGood> FindScatter(StarSystem currentSystem, float idealDistance, int jumpsPerLeg, int maxJumps)
+    {
+        RareGood closest = rares.OrderBy(r => currentSystem.Distance(r.Location)).FirstOrDefault();
+
+        List<RareGood> route = new List<RareGood>();
+        List<RareGood> leg = new List<RareGood>();
+        route.Add(closest);
+
+        while (route.Count < maxJumps)
+        {
+            RareGood current = route[route.Count - 1];
+            leg.Add(current);
+            if (leg.Count > jumpsPerLeg)
+            {
+                leg.RemoveAt(0);
+            }
+            RareGood next = rares.Where(delegate(RareGood r) {
+                // Check to see if we've already visited this location in this leg
+                if (leg.Contains(r)) { return false; }
+
+                // Check to see if this step is inefficient in the scope of the leg
+                float distance = current.Distance(r);
+                if (distance > idealDistance) { return false; }
+                r.Fitness = distance;
+
+                // Check to see if a good can be sold for an appropriate price here
+                if (route.Count >= jumpsPerLeg)
+                {
+                    float toSeller = route[route.Count - jumpsPerLeg].Distance(r);
+                    if (toSeller < idealDistance) { return false; }
+                    r.Fitness += (toSeller - idealDistance) / 2.0f;
+                }
+
+                // This rare is valid
+                return true;
+            }).OrderBy(r => r.Fitness).FirstOrDefault();
+            if (next == null) { break; }
+            route.Add(next);
+        }
+
+        return route;
+    }
+
     public List<RareGood> FindSpaghetti(StarSystem currentSystem, float idealDistance, int jumpsPerLeg, int maxJumps)
     {
         RareGood current = rares.Find(r => r.Location == currentSystem);

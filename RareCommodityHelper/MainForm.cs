@@ -19,6 +19,7 @@ namespace RareCommodityHelper
             public string DestinationSystem;
             public string JumpsPerLeg;
             public string MaxJumps;
+            public string IdealSellDistance;
 
             public Settings()
             {
@@ -27,6 +28,7 @@ namespace RareCommodityHelper
                 DestinationSystem = "Orrere";
                 JumpsPerLeg = "4";
                 MaxJumps = "10";
+                IdealSellDistance = "150";
             }
         }
 
@@ -87,6 +89,7 @@ namespace RareCommodityHelper
             DestinationSystem.Text = settings.DestinationSystem;
             JumpsPerLeg.Text = settings.JumpsPerLeg;
             MaxJumps.Text = settings.MaxJumps;
+            IdealSellDistance.Text = settings.IdealSellDistance;
 
             // Load spaaaace
             galaxy = new Galaxy();
@@ -102,6 +105,7 @@ namespace RareCommodityHelper
             settings.DestinationSystem = DestinationSystem.Text;
             settings.JumpsPerLeg = JumpsPerLeg.Text;
             settings.MaxJumps = MaxJumps.Text;
+            settings.IdealSellDistance = IdealSellDistance.Text;
             LocalData<Settings>.SaveLocalData(settings, "Settings.xml");
         }
 
@@ -239,9 +243,19 @@ namespace RareCommodityHelper
             float jumpDistance = 0.0f;
             int jumpsPerLeg = 4;
             int maxJumps = 6;
+            float idealSellDistance = 150.0f;
             try
             {
                 jumpDistance = (float)Convert.ToDouble(MaxJumpDistance.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid floating point jump distance.", "Fuck!", MessageBoxButtons.OK);
+                return;
+            }
+            try
+            {
+                idealSellDistance = (float)Convert.ToDouble(IdealSellDistance.Text);
             }
             catch
             {
@@ -268,7 +282,7 @@ namespace RareCommodityHelper
             }
 
             RoutePlanner planner = new RoutePlanner(rareData.Values.ToList(), jumpDistance);
-            List<RareGood> route = planner.FindSpaghetti(galaxy.Systems["Eranin"], 150.0f, jumpsPerLeg, maxJumps);
+            List<RareGood> route = planner.FindScatter(galaxy.Systems["Eranin"], idealSellDistance, jumpsPerLeg, maxJumps);
 
             RouteResults.Items.Clear();
             for (int i = 0; i < route.Count; i++)

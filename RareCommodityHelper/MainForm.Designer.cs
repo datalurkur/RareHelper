@@ -50,6 +50,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.JumpsPerLeg = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.IdealSellDistance = new System.Windows.Forms.TextBox();
             this.ResultsTabControl.SuspendLayout();
             this.RareResultsTab.SuspendLayout();
             this.PathResultsTab.SuspendLayout();
@@ -288,6 +290,22 @@
             this.label5.TabIndex = 16;
             this.label5.Text = "Jumps Per Leg";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 311);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(138, 11);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Ideal Sell Distance";
+            // 
+            // IdealSellDistance
+            // 
+            this.IdealSellDistance.Location = new System.Drawing.Point(14, 325);
+            this.IdealSellDistance.Name = "IdealSellDistance";
+            this.IdealSellDistance.Size = new System.Drawing.Size(100, 18);
+            this.IdealSellDistance.TabIndex = 18;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 11F);
@@ -295,6 +313,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1007, 690);
+            this.Controls.Add(this.IdealSellDistance);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.JumpsPerLeg);
             this.Controls.Add(this.label4);
@@ -349,6 +369,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox JumpsPerLeg;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox IdealSellDistance;
     }
 }
 
