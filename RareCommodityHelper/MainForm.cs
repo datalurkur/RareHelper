@@ -17,12 +17,16 @@ namespace RareCommodityHelper
             public string JumpDistance;
             public string CurrentSystem;
             public string DestinationSystem;
+            public string JumpsPerLeg;
+            public string MaxJumps;
 
             public Settings()
             {
                 JumpDistance = "12.0";
                 CurrentSystem = "Eranin";
                 DestinationSystem = "Orrere";
+                JumpsPerLeg = "4";
+                MaxJumps = "10";
             }
         }
 
@@ -54,13 +58,21 @@ namespace RareCommodityHelper
             RareResults.Columns.Add("Station Allegiance", 90);
             RareResults.ColumnClick += SortRareGoodsResults;
 
+            // Path tab
+            PathResults.ItemSelectionChanged += SetCurrentLocation;
+            PathResults.Columns.Add("System", 150);
+            PathResults.Columns.Add("#", 50);
+            PathResults.Columns.Add("Jump Dist.", 80);
+            PathResults.Columns.Add("Travelled", 80);
+            PathResults.Columns.Add("Dist. To Target", 80);
+
             // Route tab
-            RouteResults.ItemSelectionChanged += SetCurrentLocation;
             RouteResults.Columns.Add("System", 150);
-            RouteResults.Columns.Add("#", 50);
-            RouteResults.Columns.Add("Jump Dist.", 80);
-            RouteResults.Columns.Add("Travelled", 80);
-            RouteResults.Columns.Add("Dist. To Target", 80);
+            RouteResults.Columns.Add("Station", 150);
+            RouteResults.Columns.Add("Commodity", 150);
+            RouteResults.Columns.Add("Distance To Prev", 150);
+            RouteResults.Columns.Add("Good to Sell", 150);
+            RouteResults.Columns.Add("Distance To Sellee Location", 150);
             
             this.FormClosing += OnExit;
 
@@ -73,6 +85,8 @@ namespace RareCommodityHelper
             MaxJumpDistance.Text = settings.JumpDistance;
             CurrentSystem.Text = settings.CurrentSystem;
             DestinationSystem.Text = settings.DestinationSystem;
+            JumpsPerLeg.Text = settings.JumpsPerLeg;
+            MaxJumps.Text = settings.MaxJumps;
 
             // Load spaaaace
             galaxy = new Galaxy();
@@ -86,6 +100,8 @@ namespace RareCommodityHelper
             settings.JumpDistance = MaxJumpDistance.Text;
             settings.CurrentSystem = CurrentSystem.Text;
             settings.DestinationSystem = DestinationSystem.Text;
+            settings.JumpsPerLeg = JumpsPerLeg.Text;
+            settings.MaxJumps = MaxJumps.Text;
             LocalData<Settings>.SaveLocalData(settings, "Settings.xml");
         }
 
@@ -201,7 +217,7 @@ namespace RareCommodityHelper
                 return;
             }
 
-            RouteResults.Items.Clear();
+            PathResults.Items.Clear();
             float travelled = 0.0f;
             for (int i = 0; i < path.Count; i++)
             {
@@ -214,13 +230,15 @@ namespace RareCommodityHelper
                 newItem.SubItems.Add(distance.ToString("0.00"));
                 newItem.SubItems.Add(travelled.ToString("0.00"));
                 newItem.SubItems.Add(n.HScore.ToString("0.00"));
-                RouteResults.Items.Add(newItem);
+                PathResults.Items.Add(newItem);
             }
         }
 
         private void ComputeRoute(object sender, EventArgs args)
         {
             float jumpDistance = 0.0f;
+            int jumpsPerLeg = 4;
+            int maxJumps = 6;
             try
             {
                 jumpDistance = (float)Convert.ToDouble(MaxJumpDistance.Text);
@@ -230,9 +248,49 @@ namespace RareCommodityHelper
                 MessageBox.Show("Please enter a valid floating point jump distance.", "Fuck!", MessageBoxButtons.OK);
                 return;
             }
+            try
+            {
+                jumpsPerLeg = Convert.ToInt32(JumpsPerLeg.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid number of legs per jump.", "Fuck!", MessageBoxButtons.OK);
+                return;
+            }
+            try
+            {
+                maxJumps = Convert.ToInt32(MaxJumps.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid number of max jumps.", "Fuck!", MessageBoxButtons.OK);
+                return;
+            }
 
             RoutePlanner planner = new RoutePlanner(rareData.Values.ToList(), jumpDistance);
-            planner.FindRoute(galaxy.Systems["Eranin"], 150.0f, 3, 1);
+            List<RareGood> route = planner.FindSpaghetti(galaxy.Systems["Eranin"], 150.0f, jumpsPerLeg, maxJumps);
+
+            RouteResults.Items.Clear();
+            for (int i = 0; i < route.Count; i++)
+            {
+                RareGood r = route[i];
+                ListViewItem newItem = new ListViewItem();
+                newItem.Text = r.LocationName;
+                newItem.SubItems.Add(r.Station);
+                newItem.SubItems.Add(r.Name);
+                string distanceToPrev = (i > 0) ? route[i - 1].Distance(r).ToString("0.00") : "N/A";
+                newItem.SubItems.Add(distanceToPrev);
+                string sellGood = "N/A";
+                string sellDistance = "N/A";
+                if (i >= jumpsPerLeg)
+                {
+                    sellGood = route[i - jumpsPerLeg].Name;
+                    sellDistance = route[i - jumpsPerLeg].Distance(r).ToString("0.00");
+                }
+                newItem.SubItems.Add(sellGood);
+                newItem.SubItems.Add(sellDistance);
+                RouteResults.Items.Add(newItem);
+            }
         }
 
         // Just a helper method to make sure our combo boxes have valid values
@@ -275,6 +333,11 @@ namespace RareCommodityHelper
             {
                 DestinationSystem.Text = RareResults.SelectedItems[0].Text;
             }
+        }
+
+        private void RouteResults_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

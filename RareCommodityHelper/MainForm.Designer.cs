@@ -41,12 +41,19 @@
             this.PathButton = new System.Windows.Forms.Button();
             this.ResultsTabControl = new System.Windows.Forms.TabControl();
             this.RareResultsTab = new System.Windows.Forms.TabPage();
-            this.RouteResultsTab = new System.Windows.Forms.TabPage();
+            this.PathResultsTab = new System.Windows.Forms.TabPage();
+            this.PathResults = new System.Windows.Forms.ListView();
+            this.RouteTab = new System.Windows.Forms.TabPage();
             this.RouteResults = new System.Windows.Forms.ListView();
             this.RouteButton = new System.Windows.Forms.Button();
+            this.MaxJumps = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.JumpsPerLeg = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.ResultsTabControl.SuspendLayout();
             this.RareResultsTab.SuspendLayout();
-            this.RouteResultsTab.SuspendLayout();
+            this.PathResultsTab.SuspendLayout();
+            this.RouteTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // CurrentSystem
@@ -169,7 +176,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ResultsTabControl.Controls.Add(this.RareResultsTab);
-            this.ResultsTabControl.Controls.Add(this.RouteResultsTab);
+            this.ResultsTabControl.Controls.Add(this.PathResultsTab);
+            this.ResultsTabControl.Controls.Add(this.RouteTab);
             this.ResultsTabControl.Location = new System.Drawing.Point(236, 13);
             this.ResultsTabControl.Name = "ResultsTabControl";
             this.ResultsTabControl.SelectedIndex = 0;
@@ -187,16 +195,42 @@
             this.RareResultsTab.Text = "Rare Distances";
             this.RareResultsTab.UseVisualStyleBackColor = true;
             // 
-            // RouteResultsTab
+            // PathResultsTab
             // 
-            this.RouteResultsTab.Controls.Add(this.RouteResults);
-            this.RouteResultsTab.Location = new System.Drawing.Point(4, 21);
-            this.RouteResultsTab.Name = "RouteResultsTab";
-            this.RouteResultsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.RouteResultsTab.Size = new System.Drawing.Size(751, 640);
-            this.RouteResultsTab.TabIndex = 1;
-            this.RouteResultsTab.Text = "Route";
-            this.RouteResultsTab.UseVisualStyleBackColor = true;
+            this.PathResultsTab.Controls.Add(this.PathResults);
+            this.PathResultsTab.Location = new System.Drawing.Point(4, 21);
+            this.PathResultsTab.Name = "PathResultsTab";
+            this.PathResultsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.PathResultsTab.Size = new System.Drawing.Size(751, 640);
+            this.PathResultsTab.TabIndex = 1;
+            this.PathResultsTab.Text = "Path";
+            this.PathResultsTab.UseVisualStyleBackColor = true;
+            // 
+            // PathResults
+            // 
+            this.PathResults.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.PathResults.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PathResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PathResults.ForeColor = System.Drawing.Color.Silver;
+            this.PathResults.FullRowSelect = true;
+            this.PathResults.Location = new System.Drawing.Point(3, 3);
+            this.PathResults.Name = "PathResults";
+            this.PathResults.Size = new System.Drawing.Size(745, 634);
+            this.PathResults.TabIndex = 5;
+            this.PathResults.UseCompatibleStateImageBehavior = false;
+            this.PathResults.View = System.Windows.Forms.View.Details;
+            this.PathResults.SelectedIndexChanged += new System.EventHandler(this.RouteResults_SelectedIndexChanged);
+            // 
+            // RouteTab
+            // 
+            this.RouteTab.Controls.Add(this.RouteResults);
+            this.RouteTab.Location = new System.Drawing.Point(4, 21);
+            this.RouteTab.Name = "RouteTab";
+            this.RouteTab.Padding = new System.Windows.Forms.Padding(3);
+            this.RouteTab.Size = new System.Drawing.Size(751, 640);
+            this.RouteTab.TabIndex = 2;
+            this.RouteTab.Text = "Route";
+            this.RouteTab.UseVisualStyleBackColor = true;
             // 
             // RouteResults
             // 
@@ -208,19 +242,51 @@
             this.RouteResults.Location = new System.Drawing.Point(3, 3);
             this.RouteResults.Name = "RouteResults";
             this.RouteResults.Size = new System.Drawing.Size(745, 634);
-            this.RouteResults.TabIndex = 5;
+            this.RouteResults.TabIndex = 6;
             this.RouteResults.UseCompatibleStateImageBehavior = false;
             this.RouteResults.View = System.Windows.Forms.View.Details;
             // 
             // RouteButton
             // 
             this.RouteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RouteButton.Location = new System.Drawing.Point(18, 277);
+            this.RouteButton.Location = new System.Drawing.Point(14, 421);
             this.RouteButton.Name = "RouteButton";
             this.RouteButton.Size = new System.Drawing.Size(200, 23);
             this.RouteButton.TabIndex = 12;
             this.RouteButton.Text = "Compute Route";
             this.RouteButton.UseVisualStyleBackColor = true;
+            // 
+            // MaxJumps
+            // 
+            this.MaxJumps.Location = new System.Drawing.Point(14, 397);
+            this.MaxJumps.Name = "MaxJumps";
+            this.MaxJumps.Size = new System.Drawing.Size(100, 18);
+            this.MaxJumps.TabIndex = 13;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 383);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(68, 11);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Max Jumps";
+            // 
+            // JumpsPerLeg
+            // 
+            this.JumpsPerLeg.Location = new System.Drawing.Point(14, 362);
+            this.JumpsPerLeg.Name = "JumpsPerLeg";
+            this.JumpsPerLeg.Size = new System.Drawing.Size(100, 18);
+            this.JumpsPerLeg.TabIndex = 15;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 348);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(96, 11);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Jumps Per Leg";
             // 
             // MainForm
             // 
@@ -229,6 +295,10 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1007, 690);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.JumpsPerLeg);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.MaxJumps);
             this.Controls.Add(this.RouteButton);
             this.Controls.Add(this.ResultsTabControl);
             this.Controls.Add(this.PathButton);
@@ -248,7 +318,8 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResultsTabControl.ResumeLayout(false);
             this.RareResultsTab.ResumeLayout(false);
-            this.RouteResultsTab.ResumeLayout(false);
+            this.PathResultsTab.ResumeLayout(false);
+            this.RouteTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -269,9 +340,15 @@
         private System.Windows.Forms.Button PathButton;
         private System.Windows.Forms.TabControl ResultsTabControl;
         private System.Windows.Forms.TabPage RareResultsTab;
-        private System.Windows.Forms.TabPage RouteResultsTab;
-        private System.Windows.Forms.ListView RouteResults;
+        private System.Windows.Forms.TabPage PathResultsTab;
+        private System.Windows.Forms.ListView PathResults;
         private System.Windows.Forms.Button RouteButton;
+        private System.Windows.Forms.TabPage RouteTab;
+        private System.Windows.Forms.ListView RouteResults;
+        private System.Windows.Forms.TextBox MaxJumps;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox JumpsPerLeg;
+        private System.Windows.Forms.Label label5;
     }
 }
 

@@ -191,10 +191,46 @@ public class RoutePlanner
         rares = r;
     }
 
-    public List<RareGood> FindSpaghetti(StarSystem currentSystem, float idealDistance, int jumpsPerLeg)
+    public List<RareGood> FindSpaghetti(StarSystem currentSystem, float idealDistance, int jumpsPerLeg, int maxJumps)
     {
-        List<RareGood> route = new List<RareGood>();
-        return route;
+        RareGood current = rares.Find(r => r.Location == currentSystem);
+        return ComputeRouteStep(rares, new List<RareGood>(), current, idealDistance, jumpsPerLeg, maxJumps);
+    }
+
+    private List<RareGood> ComputeRouteStep(List<RareGood> available, List<RareGood> previousRoute, RareGood current, float idealDistance, int jumpsPerLeg, int maxJumps)
+    {
+        List<RareGood> currentRoute = new List<RareGood>(previousRoute);
+        currentRoute.Add(current);
+
+        if (currentRoute.Count >= maxJumps) { return currentRoute; }
+
+        List<RareGood> a = new List<RareGood>(available);
+        a.Remove(current);
+        RareGood n = a.Where(delegate(RareGood r)
+        {
+            // Check to see if this step is too far
+            float distance = current.Distance(r);
+            if (distance > idealDistance) { return false; }
+
+            r.Fitness = distance;
+            if (currentRoute.Count >= jumpsPerLeg)
+            {
+                // Check to see if a good can be sold for an appropriate price here
+                float toSeller = currentRoute[currentRoute.Count - jumpsPerLeg].Distance(r);
+                if (toSeller < idealDistance) { return false; }
+
+                r.Fitness += (toSeller - idealDistance);
+            }
+
+            return true;
+        }).OrderBy(r => r.Fitness).FirstOrDefault();
+
+        if (n == null)
+        {
+            return currentRoute;
+        }
+
+        return ComputeRouteStep(a, currentRoute, n, idealDistance, jumpsPerLeg, maxJumps);
     }
 
     public List<RareGood> FindRoute(StarSystem currentSystem, float idealDistance, int jumpsPerLeg, int attempts)

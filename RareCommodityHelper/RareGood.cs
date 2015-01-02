@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System;
 
 public class StarSystem
 {
@@ -31,6 +32,9 @@ public class RareGood
     [XmlIgnoreAttribute]
     public StarSystem Location;
 
+    [XmlIgnoreAttribute]
+    public float Fitness;
+
     public RareGood()
     {
         Name = "";
@@ -39,6 +43,7 @@ public class RareGood
         StationDistance = "";
         Allegiance = "";
         LastKnownCost = 0;
+        Fitness = Single.PositiveInfinity;
 
         Location = null;
     }
