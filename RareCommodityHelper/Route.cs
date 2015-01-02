@@ -147,36 +147,21 @@ public class PathPlanner
     }
 }
 
-class RouteNode
+public class RouteNode
 {
     public RareGood Rare;
-    public Coords Position;
-    public float DistanceFromPlane;
-    public float DistanceFromPrev;
-    public float DistanceFromNext;
-    public float DistanceFromSphere;
-    public float DistanceFromCross;
+    public List<RareGood> SellHere;
 
-    public float SortingMetric;
-    public RouteNode(RareGood r, Coords center, Coords radiusNormal, Coords radiusPoint, RareGood prev, RareGood next, RareGood cross, float ideal)
+    public RouteNode(RareGood r)
     {
         Rare = r;
-        Position = r.Location.Position;
-        DistanceFromSphere = Position.Distance(center);
-        DistanceFromPrev = Rare.Distance(prev);
-        DistanceFromPlane = (radiusNormal.X * (Position.X - radiusPoint.X)) + (radiusNormal.Y * (Position.Y - radiusPoint.Y)) + (radiusNormal.Z * (Position.Z - radiusPoint.Z));
+        SellHere = new List<RareGood>();
+    }
 
-        SortingMetric = DistanceFromSphere + DistanceFromPrev + DistanceFromPlane;
-        if (next != null)
-        {
-            DistanceFromNext = Rare.Distance(next);
-            SortingMetric += DistanceFromNext;
-        }
-        if (cross != null)
-        {
-            DistanceFromCross = Math.Abs(ideal - Rare.Distance(cross));
-            SortingMetric += DistanceFromCross;
-        }
+    public RouteNode(RareGood r, List<RareGood> sell)
+    {
+        Rare = r;
+        SellHere = new List<RareGood>(sell);
     }
 }
 
@@ -191,162 +176,58 @@ public class RoutePlanner
         rares = r;
     }
 
-    public List<RareGood> FindScatter(StarSystem currentSystem, float idealDistance, int jumpsPerLeg, int maxJumps)
+    public List<RouteNode> FindRoute(StarSystem currentSystem, float idealDistance, int jumpsPerLeg, int maxJumps)
     {
         RareGood closest = rares.OrderBy(r => currentSystem.Distance(r.Location)).FirstOrDefault();
 
-        List<RareGood> route = new List<RareGood>();
-        List<RareGood> leg = new List<RareGood>();
-        route.Add(closest);
+        List<RouteNode> route = new List<RouteNode>();
+        route.Add(new RouteNode(closest));
+        List<RareGood> currentRares = new List<RareGood>();
 
         while (route.Count < maxJumps)
         {
-            RareGood current = route[route.Count - 1];
-            leg.Add(current);
-            if (leg.Count > jumpsPerLeg)
-            {
-                leg.RemoveAt(0);
-            }
+            RareGood current = route[route.Count - 1].Rare;
+            currentRares.Add(current);
             RareGood next = rares.Where(delegate(RareGood r) {
                 // Check to see if we've already visited this location in this leg
-                if (leg.Contains(r)) { return false; }
+                if (currentRares.Contains(r)) { return false; }
 
                 // Check to see if this step is inefficient in the scope of the leg
                 float distance = current.Distance(r);
                 if (distance > idealDistance) { return false; }
                 r.Fitness = distance;
 
-                // Check to see if a good can be sold for an appropriate price here
-                if (route.Count >= jumpsPerLeg)
+                // Check to see if we have to sell here
+                float sellOffsets = 0.0f;
+                bool canSell = false;
+                foreach(RareGood s in currentRares)
                 {
-                    float toSeller = route[route.Count - jumpsPerLeg].Distance(r);
-                    if (toSeller < idealDistance) { return false; }
-                    r.Fitness += (toSeller - idealDistance) / 2.0f;
+                    float toSeller = s.Distance(r);
+                    if (toSeller >= idealDistance) { canSell = true; }
+                    sellOffsets -= (toSeller - idealDistance);
                 }
+                if (currentRares.Count == jumpsPerLeg && !canSell)
+                {
+                    return false;
+                }
+                r.Fitness += sellOffsets / 10.0f;
 
                 // This rare is valid
                 return true;
             }).OrderBy(r => r.Fitness).FirstOrDefault();
             if (next == null) { break; }
-            route.Add(next);
+            List<RareGood> sellable = new List<RareGood>();
+            foreach (RareGood r in currentRares)
+            {
+                if (next.Distance(r) >= idealDistance) { sellable.Add(r); }
+            }
+            foreach (RareGood r in sellable)
+            {
+                currentRares.Remove(r);
+            }
+            route.Add(new RouteNode(next, sellable));
         }
 
         return route;
-    }
-
-    public List<RareGood> FindSpaghetti(StarSystem currentSystem, float idealDistance, int jumpsPerLeg, int maxJumps)
-    {
-        RareGood current = rares.Find(r => r.Location == currentSystem);
-        return ComputeRouteStep(rares, new List<RareGood>(), current, idealDistance, jumpsPerLeg, maxJumps);
-    }
-
-    private List<RareGood> ComputeRouteStep(List<RareGood> available, List<RareGood> previousRoute, RareGood current, float idealDistance, int jumpsPerLeg, int maxJumps)
-    {
-        List<RareGood> currentRoute = new List<RareGood>(previousRoute);
-        currentRoute.Add(current);
-
-        if (currentRoute.Count >= maxJumps) { return currentRoute; }
-
-        List<RareGood> a = new List<RareGood>(available);
-        a.Remove(current);
-        RareGood n = a.Where(delegate(RareGood r)
-        {
-            // Check to see if this step is too far
-            float distance = current.Distance(r);
-            if (distance > idealDistance) { return false; }
-
-            r.Fitness = distance;
-            if (currentRoute.Count >= jumpsPerLeg)
-            {
-                // Check to see if a good can be sold for an appropriate price here
-                float toSeller = currentRoute[currentRoute.Count - jumpsPerLeg].Distance(r);
-                if (toSeller < idealDistance) { return false; }
-
-                r.Fitness += (toSeller - idealDistance);
-            }
-
-            return true;
-        }).OrderBy(r => r.Fitness).FirstOrDefault();
-
-        if (n == null)
-        {
-            return currentRoute;
-        }
-
-        return ComputeRouteStep(a, currentRoute, n, idealDistance, jumpsPerLeg, maxJumps);
-    }
-
-    public List<RareGood> FindRoute(StarSystem currentSystem, float idealDistance, int jumpsPerLeg, int attempts)
-    {
-        RareGood startingGood = rares.OrderBy(r => currentSystem.Distance(r.Location)).FirstOrDefault();
-        float sellDistance = idealDistance;
-
-        List<RareGood> ret = null;
-        for(int i = 0; i < attempts; i++)
-        {
-            if(AttemptRoute(startingGood, idealDistance, jumpsPerLeg, out ret))
-            {
-                break;
-            }
-        }
-        return ret;
-    }
-
-    // So wow is this algorithm terrible
-    private bool AttemptRoute(RareGood startingGood, float idealDistance, int jumpsPerLeg, out List<RareGood> route)
-    {
-        // Select the good that is closest to and above the ideal distance from the starting point
-        RareGood midGood = rares.Where(r => startingGood.Location.Distance(r.Location) >= idealDistance).OrderBy(r => startingGood.Location.Distance(r.Location)).FirstOrDefault();
-
-        // Describe a sphere that contains both the starting good and mid good
-        Coords offset = midGood.Location.Position - startingGood.Location.Position;
-        Coords halfOffset = offset / 2.0f;
-        Coords center = startingGood.Location.Position + halfOffset;
-
-        // Cull any nodes inside the sphere
-        float idealSquared = idealDistance * idealDistance;
-        List<RareGood> viableNodes = rares.Where(r => r.Location.Position.DistanceSquared(center) > idealSquared).ToList();
-
-        Coords radiusDir = halfOffset.Normal();
-        float radius = halfOffset.Magnitude();
-        float arcLength = radius * Pi;
-        float idealStep = arcLength / jumpsPerLeg;
-
-        // Prepare initial state
-        viableNodes.Remove(startingGood);
-        viableNodes.Remove(midGood);
-
-        List<RareGood> potentialRoute = new List<RareGood>();
-        potentialRoute.Add(startingGood);
-        RareGood prev = startingGood;
-
-        for(int i = 1; i < jumpsPerLeg * 2; i++)
-        {
-            if (i == jumpsPerLeg)
-            {
-                prev = midGood;
-                potentialRoute.Add(midGood);
-                continue;
-            }
-
-            float distanceFromCenter = -radius * (float)Math.Sin(Pi * (((float)i / jumpsPerLeg) + 0.5f));
-            Coords pointAlongDiameter = center + (radiusDir * distanceFromCenter);
-
-            RareGood next = null;
-            if (i == jumpsPerLeg - 1) { next = midGood; }
-            else if (i == jumpsPerLeg * 2 - 1) { next = startingGood; }
-            RareGood cross = (i > jumpsPerLeg) ? potentialRoute[i - jumpsPerLeg] : null;
-            List<RouteNode> viableRoutes = viableNodes.Select(n => new RouteNode(n, center, radiusDir, pointAlongDiameter, prev, next, cross, idealDistance)).ToList();
-            viableRoutes.Sort(delegate(RouteNode x, RouteNode y) {
-                return x.SortingMetric > y.SortingMetric ? 1 : -1;
-            });
-
-            prev = viableRoutes.FirstOrDefault().Rare;
-            potentialRoute.Add(prev);
-            viableNodes.Remove(prev);
-        }
-
-        route = potentialRoute;
-        return true;
     }
 }

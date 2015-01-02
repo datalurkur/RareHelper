@@ -51,11 +51,11 @@ namespace RareCommodityHelper
 
             // Rare tab
             RareResults.ItemSelectionChanged += SetNewDestination;
-            RareResults.Columns.Add("System", 120);
+            RareResults.Columns.Add("System", 100);
             RareResults.Columns.Add("Station", 150);
             RareResults.Columns.Add("Commodity", 200);
-            RareResults.Columns.Add("Distance", 70);
-            RareResults.Columns.Add("Station Distance", 70);
+            RareResults.Columns.Add("Distance", 60);
+            RareResults.Columns.Add("Station Distance", 60);
             RareResults.Columns.Add("Last Known Price", 50);
             RareResults.Columns.Add("Station Allegiance", 90);
             RareResults.ColumnClick += SortRareGoodsResults;
@@ -63,18 +63,19 @@ namespace RareCommodityHelper
             // Path tab
             PathResults.ItemSelectionChanged += SetCurrentLocation;
             PathResults.Columns.Add("System", 150);
-            PathResults.Columns.Add("#", 50);
-            PathResults.Columns.Add("Jump Dist.", 80);
-            PathResults.Columns.Add("Travelled", 80);
-            PathResults.Columns.Add("Dist. To Target", 80);
+            PathResults.Columns.Add("#", 30);
+            PathResults.Columns.Add("Jump Dist.", 60);
+            PathResults.Columns.Add("Travelled", 60);
+            PathResults.Columns.Add("Dist. To Target", 60);
 
             // Route tab
-            RouteResults.Columns.Add("System", 150);
+            RouteResults.Columns.Add("System", 100);
+            RouteResults.Columns.Add("#", 30);
             RouteResults.Columns.Add("Station", 150);
             RouteResults.Columns.Add("Commodity", 150);
-            RouteResults.Columns.Add("Distance To Prev", 150);
+            RouteResults.Columns.Add("Distance To Prev", 60);
             RouteResults.Columns.Add("Good to Sell", 150);
-            RouteResults.Columns.Add("Distance To Sellee Location", 150);
+            RouteResults.Columns.Add("Distance To Sellee Location", 60);
             
             this.FormClosing += OnExit;
 
@@ -287,27 +288,41 @@ namespace RareCommodityHelper
 
             RoutePlanner planner = new RoutePlanner(rareData.Values.ToList(), jumpDistance);
             StarSystem start = galaxy.Systems[CurrentSystem.Text];
-            List<RareGood> route = planner.FindScatter(start, idealSellDistance, jumpsPerLeg, maxJumps);
+            List<RouteNode> route = planner.FindRoute(start, idealSellDistance, jumpsPerLeg, maxJumps);
 
             RouteResults.Items.Clear();
             for (int i = 0; i < route.Count; i++)
             {
-                RareGood r = route[i];
+                RouteNode r = route[i];
+                string distanceToPrev = (i > 0) ? route[i - 1].Rare.Distance(r.Rare).ToString("0.00") : "N/A";
+
                 ListViewItem newItem = new ListViewItem();
-                newItem.Text = r.LocationName;
-                newItem.SubItems.Add(r.Station);
-                newItem.SubItems.Add(r.Name);
-                string distanceToPrev = (i > 0) ? route[i - 1].Distance(r).ToString("0.00") : "N/A";
+                newItem.Text = r.Rare.LocationName;
+                newItem.SubItems.Add(i.ToString());
+                newItem.SubItems.Add(r.Rare.Station);
+                newItem.SubItems.Add(r.Rare.Name);
                 newItem.SubItems.Add(distanceToPrev);
-                string sellGood = "N/A";
-                string sellDistance = "N/A";
-                if (i >= jumpsPerLeg)
+                if (route[i].SellHere.Count == 0)
                 {
-                    sellGood = route[i - jumpsPerLeg].Name;
-                    sellDistance = route[i - jumpsPerLeg].Distance(r).ToString("0.00");
+                    newItem.SubItems.Add("N/A");
+                    newItem.SubItems.Add("N/A");
                 }
-                newItem.SubItems.Add(sellGood);
-                newItem.SubItems.Add(sellDistance);
+                for (int j = 0; j < route[i].SellHere.Count; j++)
+                {
+                    RareGood s = route[i].SellHere[j];
+                    newItem.SubItems.Add(s.Name);
+                    newItem.SubItems.Add(s.Distance(r.Rare).ToString("0.00"));
+                    if (j < route[i].SellHere.Count - 1)
+                    {
+                        RouteResults.Items.Add(newItem);
+                        newItem = new ListViewItem();
+                        newItem.Text = "";
+                        newItem.SubItems.Add("");
+                        newItem.SubItems.Add("");
+                        newItem.SubItems.Add("");
+                        newItem.SubItems.Add("");
+                    }
+                }
                 RouteResults.Items.Add(newItem);
             }
         }
@@ -340,9 +355,9 @@ namespace RareCommodityHelper
         }
         private void SetCurrentLocation(object sender, EventArgs e)
         {
-            if (RareResults.SelectedItems.Count > 0)
+            if (PathResults.SelectedItems.Count > 0)
             {
-                CurrentSystem.Text = RareResults.SelectedItems[0].Text;
+                CurrentSystem.Text = PathResults.SelectedItems[0].Text;
             }
         }
 
@@ -352,11 +367,6 @@ namespace RareCommodityHelper
             {
                 DestinationSystem.Text = RareResults.SelectedItems[0].Text;
             }
-        }
-
-        private void RouteResults_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

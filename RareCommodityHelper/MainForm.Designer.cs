@@ -221,7 +221,6 @@
             this.PathResults.TabIndex = 5;
             this.PathResults.UseCompatibleStateImageBehavior = false;
             this.PathResults.View = System.Windows.Forms.View.Details;
-            this.PathResults.SelectedIndexChanged += new System.EventHandler(this.RouteResults_SelectedIndexChanged);
             // 
             // RouteTab
             // 
