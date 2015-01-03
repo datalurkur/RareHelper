@@ -114,17 +114,24 @@ public class StarCoordinator
             MessageBox.Show("It looks like this is your first time using the tool.  This next part might take a second.  Just be patient.", "Fuck!", MessageBoxButtons.OK);
         }
 
-        // Get fresh data from the web
-        JSONSystem[] newData = await FetchSystemsFromWeb(lastSynced);
-        foreach (JSONSystem s in newData)
+        try
         {
-            StarSystem n = new StarSystem();
-            n.Name = s.name;
-            n.Position = new Coords();
-            n.Position.X = s.coord[0];
-            n.Position.Y = s.coord[1];
-            n.Position.Z = s.coord[2];
-            ret[n.Name] = n;
+            // Get fresh data from the web
+            JSONSystem[] newData = await FetchSystemsFromWeb(lastSynced);
+            foreach (JSONSystem s in newData)
+            {
+                StarSystem n = new StarSystem();
+                n.Name = s.name;
+                n.Position = new Coords();
+                n.Position.X = s.coord[0];
+                n.Position.Y = s.coord[1];
+                n.Position.Z = s.coord[2];
+                ret[n.Name] = n;
+            }
+        }
+        catch
+        {
+            MessageBox.Show("Failed to get data from EDStarCoordinator.", "FucK!", MessageBoxButtons.OK);
         }
 
         // Save the new cache

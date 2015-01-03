@@ -21,6 +21,8 @@ namespace RareCommodityHelper
             public string MaxJumps;
             public string IdealSellDistance;
 
+            public List<string> Blacklist;
+
             public Settings()
             {
                 JumpDistance = "12.0";
@@ -29,14 +31,18 @@ namespace RareCommodityHelper
                 JumpsPerLeg = "4";
                 MaxJumps = "10";
                 IdealSellDistance = "150";
+
+                Blacklist = new List<string>();
             }
         }
 
         private Galaxy galaxy;
-        private Dictionary<string,RareGood> rareData;
+        private Dictionary<string, RareGood> rareData;
+        private Dictionary<string, RareGood> availableRares;
         private List<RouteNode> currentRoute;
         private int rareColumn = 0;
         private bool rareAscending = true;
+        private List<string> blacklist;
 
         public MainForm()
         {
@@ -70,6 +76,7 @@ namespace RareCommodityHelper
             PathResults.Columns.Add("Dist. To Target", 60);
 
             // Route tab
+            RouteResults.ItemSelectionChanged += SetCurrentRouteStop;
             RouteResults.Columns.Add("System", 100);
             RouteResults.Columns.Add("#", 30);
             RouteResults.Columns.Add("Station", 150);
@@ -94,6 +101,11 @@ namespace RareCommodityHelper
             IdealSellDistance.Text = settings.IdealSellDistance;
             SaveButton.Click += FullSaveRoute;
             LoadButton.Click += FullLoadRoute;
+            RareGoodSelector.DrawItem += DrawRaresComboBox;
+            BlacklistButton.Click += Blacklist;
+            UnblacklistButton.Click += Unblacklist;
+
+            blacklist = settings.Blacklist;
 
             // Load spaaaace
             galaxy = new Galaxy();
@@ -112,6 +124,7 @@ namespace RareCommodityHelper
             settings.JumpsPerLeg = JumpsPerLeg.Text;
             settings.MaxJumps = MaxJumps.Text;
             settings.IdealSellDistance = IdealSellDistance.Text;
+            settings.Blacklist = blacklist;
             LocalData<Settings>.SaveLocalData(settings, "Settings.xml");
         }
 
@@ -131,13 +144,21 @@ namespace RareCommodityHelper
 
             // Fill in data in rare good fields
             List<RareGood> rares = RareData.GetRares();
+            string[] rareNames = rares.Select(r => r.Name).OrderBy(r => r).ToArray();
+            RareGoodSelector.Items.Clear();
+            RareGoodSelector.Items.AddRange(rareNames);
             rareData = new Dictionary<string, RareGood>();
+            availableRares = new Dictionary<string, RareGood>();
             foreach(RareGood rare in rares)
             { 
                 try
                 {
                     rare.Location = galaxy.Systems[rare.LocationName];
                     rareData[rare.Name] = rare;
+                    if (!blacklist.Contains(rare.Name))
+                    {
+                        availableRares[rare.Name] = rare;
+                    }
                 }
                 catch
                 {
@@ -157,7 +178,7 @@ namespace RareCommodityHelper
             RareResults.Items.Clear();
 
             List<Destination> sorted;
-            galaxy.SortRaresByDistance(CurrentSystem.Text, rareData.Values.ToList(), out sorted);
+            galaxy.SortRaresByDistance(CurrentSystem.Text, availableRares.Values.ToList(), out sorted);
             foreach (Destination dest in sorted)
             {
                 RareGood rare = dest.Rare;
@@ -291,7 +312,7 @@ namespace RareCommodityHelper
                 return;
             }
 
-            RoutePlanner planner = new RoutePlanner(rareData.Values.ToList(), jumpDistance);
+            RoutePlanner planner = new RoutePlanner(availableRares.Values.ToList(), jumpDistance);
             StarSystem start = galaxy.Systems[CurrentSystem.Text];
             currentRoute = planner.FindRoute(start, idealSellDistance, jumpsPerLeg, maxJumps);
             OnRouteUpdated();
@@ -380,6 +401,24 @@ namespace RareCommodityHelper
             }
         }
 
+        private void SetCurrentRouteStop(object sender, EventArgs e)
+        {
+            if (RouteResults.SelectedIndices.Count > 0)
+            {
+                int selected = RouteResults.SelectedIndices[0];
+                if (selected != 0)
+                {
+                    ListViewItem start = RouteResults.Items[selected - 1];
+                    ListViewItem end = RouteResults.Items[selected];
+
+                    CurrentSystem.Text = start.Text;
+                    DestinationSystem.Text = end.Text;
+
+                    ComputePath(sender, e);
+                }
+            }
+        }
+
         private void QuickLoadRoute(object sender, EventArgs e)
         {
             LoadRoute("Route.xml");
@@ -435,6 +474,40 @@ namespace RareCommodityHelper
         private void SaveRoute(string fileName)
         {
             LocalData<List<RouteNode>>.SaveLocalData(currentRoute, fileName);
+        }
+
+        private void DrawRaresComboBox(object sender, DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            string text = ((ComboBox)sender).Items[e.Index].ToString();
+            Brush brush = Brushes.Black;
+            if (blacklist.Contains(text))
+            {
+                brush = Brushes.Red;
+            }
+            e.Graphics.DrawString(text, ((Control)sender).Font, brush, e.Bounds.X, e.Bounds.Y);
+        }
+
+        private void Blacklist(object sender, EventArgs e)
+        {
+            if (!ValidateComboBox(RareGoodSelector))
+            {
+                return;
+            }
+            string r = RareGoodSelector.Text;
+            blacklist.Add(r);
+            availableRares.Remove(r);
+        }
+
+        private void Unblacklist(object sender, EventArgs e)
+        {
+            if (!ValidateComboBox(RareGoodSelector))
+            {
+                return;
+            }
+            string r = RareGoodSelector.Text;
+            blacklist.Remove(r);
+            availableRares.Add(r, rareData[r]);
         }
     }
 }

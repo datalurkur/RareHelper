@@ -56,6 +56,10 @@
             this.QuickLoadRouteButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             this.LoadButton = new System.Windows.Forms.Button();
+            this.RareGoodSelector = new System.Windows.Forms.ComboBox();
+            this.RareGoodLabel = new System.Windows.Forms.Label();
+            this.BlacklistButton = new System.Windows.Forms.Button();
+            this.UnblacklistButton = new System.Windows.Forms.Button();
             this.ResultsTabControl.SuspendLayout();
             this.RareResultsTab.SuspendLayout();
             this.PathResultsTab.SuspendLayout();
@@ -351,6 +355,45 @@
             this.LoadButton.Text = "Load";
             this.LoadButton.UseVisualStyleBackColor = true;
             // 
+            // RareGoodSelector
+            // 
+            this.RareGoodSelector.BackColor = System.Drawing.Color.Silver;
+            this.RareGoodSelector.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.RareGoodSelector.FormattingEnabled = true;
+            this.RareGoodSelector.Location = new System.Drawing.Point(12, 541);
+            this.RareGoodSelector.Name = "RareGoodSelector";
+            this.RareGoodSelector.Size = new System.Drawing.Size(202, 19);
+            this.RareGoodSelector.TabIndex = 23;
+            // 
+            // RareGoodLabel
+            // 
+            this.RareGoodLabel.AutoSize = true;
+            this.RareGoodLabel.Location = new System.Drawing.Point(12, 527);
+            this.RareGoodLabel.Name = "RareGoodLabel";
+            this.RareGoodLabel.Size = new System.Drawing.Size(68, 11);
+            this.RareGoodLabel.TabIndex = 24;
+            this.RareGoodLabel.Text = "Rare Good";
+            // 
+            // BlacklistButton
+            // 
+            this.BlacklistButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlacklistButton.Location = new System.Drawing.Point(12, 567);
+            this.BlacklistButton.Name = "BlacklistButton";
+            this.BlacklistButton.Size = new System.Drawing.Size(96, 23);
+            this.BlacklistButton.TabIndex = 25;
+            this.BlacklistButton.Text = "Blacklist";
+            this.BlacklistButton.UseVisualStyleBackColor = true;
+            // 
+            // UnblacklistButton
+            // 
+            this.UnblacklistButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UnblacklistButton.Location = new System.Drawing.Point(114, 567);
+            this.UnblacklistButton.Name = "UnblacklistButton";
+            this.UnblacklistButton.Size = new System.Drawing.Size(100, 23);
+            this.UnblacklistButton.TabIndex = 26;
+            this.UnblacklistButton.Text = "Un-Blacklist";
+            this.UnblacklistButton.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 11F);
@@ -358,6 +401,10 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1007, 690);
+            this.Controls.Add(this.UnblacklistButton);
+            this.Controls.Add(this.BlacklistButton);
+            this.Controls.Add(this.RareGoodLabel);
+            this.Controls.Add(this.RareGoodSelector);
             this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.QuickLoadRouteButton);
@@ -424,6 +471,10 @@
         private System.Windows.Forms.Button QuickLoadRouteButton;
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Button LoadButton;
+        private System.Windows.Forms.ComboBox RareGoodSelector;
+        private System.Windows.Forms.Label RareGoodLabel;
+        private System.Windows.Forms.Button BlacklistButton;
+        private System.Windows.Forms.Button UnblacklistButton;
     }
 }
 
