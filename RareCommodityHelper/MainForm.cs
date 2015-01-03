@@ -225,17 +225,13 @@ namespace RareCommodityHelper
         // Compute a path from the player's current system to the selected destination system
         private void ComputePath(object sender, EventArgs e)
         {
-            float jumpDistance = 0.0f;
-            try
-            {
-                jumpDistance = (float)Convert.ToDouble(MaxJumpDistance.Text);
-            }
-            catch
+            var jumpDistance = FloatHelper.AsFloat(MaxJumpDistance.Text);
+            if (Math.Abs(jumpDistance) < 0.0000001f)
             {
                 MessageBox.Show("Please enter a valid floating point jump distance.", "Fuck!", MessageBoxButtons.OK);
                 return;
             }
-
+                
             if (!ValidateComboBox(CurrentSystem) || !ValidateComboBox(DestinationSystem))
             {
                 return;
@@ -268,28 +264,23 @@ namespace RareCommodityHelper
 
         private void ComputeRoute(object sender, EventArgs args)
         {
-            float jumpDistance = 0.0f;
             int jumpsPerLeg = 4;
             int maxJumps = 6;
-            float idealSellDistance = 150.0f;
-            try
-            {
-                jumpDistance = (float)Convert.ToDouble(MaxJumpDistance.Text);
-            }
-            catch
+
+            var jumpDistance = FloatHelper.AsFloat(MaxJumpDistance.Text);
+            if (Math.Abs(jumpDistance) < 0.0000001f)
             {
                 MessageBox.Show("Please enter a valid floating point jump distance.", "Fuck!", MessageBoxButtons.OK);
                 return;
             }
-            try
-            {
-                idealSellDistance = (float)Convert.ToDouble(IdealSellDistance.Text);
-            }
-            catch
+
+            var idealSellDistance = FloatHelper.AsFloat(IdealSellDistance.Text);
+            if (Math.Abs(idealSellDistance) < 0.0000001f)
             {
                 MessageBox.Show("Please enter a valid floating point jump distance.", "Fuck!", MessageBoxButtons.OK);
                 return;
             }
+
             try
             {
                 jumpsPerLeg = Convert.ToInt32(JumpsPerLeg.Text);
