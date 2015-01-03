@@ -1,8 +1,10 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Net.Http;
 using System.Web.Script.Serialization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using RareCommodityHelper;
 
 public class StarCoordinator
 {
@@ -94,11 +96,12 @@ public class StarCoordinator
             {
                 ret[system.Name] = system;
             }
+
             return ret;
         }
     }
 
-    public static async Task<Dictionary<string,StarSystem>> FetchSystems()
+    public static async Task<Dictionary<string, StarSystem>> FetchSystems()
     {
         // Get existing data from the cache
         CachedData preexistingData;
@@ -117,17 +120,13 @@ public class StarCoordinator
         try
         {
             // Get fresh data from the web
-            JSONSystem[] newData = await FetchSystemsFromWeb(lastSynced);
-            foreach (JSONSystem s in newData)
-            {
-                StarSystem n = new StarSystem();
-                n.Name = s.name;
-                n.Position = new Coords();
-                n.Position.X = s.coord[0];
-                n.Position.Y = s.coord[1];
-                n.Position.Z = s.coord[2];
-                ret[n.Name] = n;
-            }
+            var newData = await FetchSystemsFromWeb(lastSynced);
+            var newSystems = ProcessRetrievedData(newData);
+
+            if (ret.Count == 0)
+                ret = newSystems;
+            else
+                newSystems.ForEach(system => ret[system.Key] = system.Value);
         }
         catch
         {
@@ -140,6 +139,19 @@ public class StarCoordinator
         LocalData<CachedData>.SaveLocalData(newCache, "EDSystemCache.xml");
 
         return ret;
+    }
+
+    private static Dictionary<string, StarSystem> ProcessRetrievedData(IEnumerable<JSONSystem> newData)
+    {
+        return newData
+            .AsParallel()
+            .Select(data =>
+                new StarSystem
+                {
+                    Name = data.name,
+                    Position = new Coords { X = data.coord[0], Y = data.coord[1], Z = data.coord[2] }
+                })
+            .ToDictionary(newSystem => newSystem.Name, newSystem => newSystem);
     }
 
     private static async Task<JSONSystem[]> FetchSystemsFromWeb(string lastSynced)
