@@ -1,0 +1,5 @@
+RareCommodityHelper/obj
+RareCommodityHelper/bin/*
+!RareCommodityHelper/bin/Release
+RareCommodityHelper/bin/Release/*
+!RareCommodityHelper/bin/Release/Rares.xml
