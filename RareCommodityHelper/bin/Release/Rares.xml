@@ -45,7 +45,7 @@
       <Name>Altairian Skin</Name>
       <LocationName>Altair</LocationName>
       <Station>Solo Orbiter</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>661ls</StationDistance>
       <Allegiance>Federation</Allegiance>
       <LastKnownCost>489</LastKnownCost>
     </RareGood>
@@ -469,7 +469,7 @@
       <Name>Lavian Brandy</Name>
       <LocationName>Lave</LocationName>
       <Station>Lave Station</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>302ls</StationDistance>
       <Allegiance>Alliance</Allegiance>
       <LastKnownCost>3500</LastKnownCost>
     </RareGood>
@@ -477,7 +477,7 @@
       <Name>Leestian Evil Juice</Name>
       <LocationName>Leesti</LocationName>
       <Station>George Lucas</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>257ls</StationDistance>
       <Allegiance>Alliance</Allegiance>
       <LastKnownCost>334</LastKnownCost>
     </RareGood>
@@ -485,7 +485,7 @@
       <Name>Azure Milk</Name>
       <LocationName>Leesti</LocationName>
       <Station>George Lucas</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>257ls</StationDistance>
       <Allegiance>Alliance</Allegiance>
       <LastKnownCost>3010</LastKnownCost>
     </RareGood>

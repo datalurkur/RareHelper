@@ -61,8 +61,8 @@ namespace RareCommodityHelper
             RareResults.Columns.Add("System", 100);
             RareResults.Columns.Add("Station", 150);
             RareResults.Columns.Add("Commodity", 200);
-            RareResults.Columns.Add("Distance", 60);
-            RareResults.Columns.Add("Station Distance", 60);
+            RareResults.Columns.Add("Dist.", 60);
+            RareResults.Columns.Add("Station Dist.", 60);
             RareResults.Columns.Add("Last Known Price", 50);
             RareResults.Columns.Add("Station Allegiance", 90);
             RareResults.ColumnClick += SortRareGoodsResults;
@@ -80,10 +80,11 @@ namespace RareCommodityHelper
             RouteResults.Columns.Add("System", 100);
             RouteResults.Columns.Add("#", 30);
             RouteResults.Columns.Add("Station", 150);
+            RouteResults.Columns.Add("Station Dist.", 60);
             RouteResults.Columns.Add("Commodity", 150);
-            RouteResults.Columns.Add("Distance To Prev", 60);
+            RouteResults.Columns.Add("Dist. To Prev", 60);
             RouteResults.Columns.Add("Good to Sell", 150);
-            RouteResults.Columns.Add("Distance To Sellee Location", 60);
+            RouteResults.Columns.Add("Dist. To Sellee", 60);
             
             this.FormClosing += OnExit;
 
@@ -330,6 +331,7 @@ namespace RareCommodityHelper
                 newItem.Text = r.Rare.LocationName;
                 newItem.SubItems.Add(i.ToString());
                 newItem.SubItems.Add(r.Rare.Station);
+                newItem.SubItems.Add(r.Rare.StationDistance);
                 newItem.SubItems.Add(r.Rare.Name);
                 newItem.SubItems.Add(distanceToPrev);
                 if (currentRoute[i].SellHere.Count == 0)
@@ -347,6 +349,7 @@ namespace RareCommodityHelper
                         RouteResults.Items.Add(newItem);
                         newItem = new ListViewItem();
                         newItem.Text = "";
+                        newItem.SubItems.Add("");
                         newItem.SubItems.Add("");
                         newItem.SubItems.Add("");
                         newItem.SubItems.Add("");
