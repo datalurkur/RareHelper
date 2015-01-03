@@ -409,14 +409,22 @@ namespace RareCommodityHelper
             if (RouteResults.SelectedIndices.Count > 0)
             {
                 int selected = RouteResults.SelectedIndices[0];
-                if (selected != 0)
+
+                int startIndex = selected;
+                for(int i = selected - 1; i >= 0; --i)
                 {
-                    ListViewItem start = RouteResults.Items[selected - 1];
+                    if (RouteResults.Items[i].Text != "")
+                    {
+                        startIndex = i;
+                        break;
+                    }
+                }
+                if (startIndex != selected)
+                {
                     ListViewItem end = RouteResults.Items[selected];
-
-                    CurrentSystem.Text = start.Text;
                     DestinationSystem.Text = end.Text;
-
+                    ListViewItem start = RouteResults.Items[startIndex];
+                    CurrentSystem.Text = start.Text;
                     ComputePath(sender, e);
                 }
             }
@@ -440,15 +448,18 @@ namespace RareCommodityHelper
 
         private void LoadRoute(string fileName)
         {
-            if (LocalData<List<RouteNode>>.LoadLocalData(fileName, out currentRoute))
+            List<RouteNode> updatedRoute;
+            if (LocalData<List<RouteNode>>.LoadLocalData(fileName, out updatedRoute))
             {
-                foreach (RouteNode r in currentRoute)
+                currentRoute = new List<RouteNode>();
+                foreach (RouteNode r in updatedRoute)
                 {
-                    r.Rare.Location = galaxy.Systems[r.Rare.LocationName];
+                    RouteNode n = new RouteNode(rareData[r.Rare.Name]);
                     foreach (RareGood s in r.SellHere)
                     {
-                        s.Location = galaxy.Systems[s.LocationName];
+                        n.SellHere.Add(rareData[s.Name]);
                     }
+                    currentRoute.Add(n);
                 }
                 OnRouteUpdated();
             }
