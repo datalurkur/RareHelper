@@ -52,6 +52,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.IdealSellDistance = new System.Windows.Forms.TextBox();
+            this.SaveRouteButton = new System.Windows.Forms.Button();
+            this.LoadRouteButton = new System.Windows.Forms.Button();
             this.ResultsTabControl.SuspendLayout();
             this.RareResultsTab.SuspendLayout();
             this.PathResultsTab.SuspendLayout();
@@ -305,6 +307,28 @@
             this.IdealSellDistance.Size = new System.Drawing.Size(100, 18);
             this.IdealSellDistance.TabIndex = 18;
             // 
+            // SaveRouteButton
+            // 
+            this.SaveRouteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveRouteButton.Location = new System.Drawing.Point(13, 451);
+            this.SaveRouteButton.Name = "SaveRouteButton";
+            this.SaveRouteButton.Size = new System.Drawing.Size(75, 23);
+            this.SaveRouteButton.TabIndex = 19;
+            this.SaveRouteButton.Text = "Save";
+            this.SaveRouteButton.UseVisualStyleBackColor = true;
+            this.SaveRouteButton.Click += new System.EventHandler(this.SaveRoute);
+            // 
+            // LoadRouteButton
+            // 
+            this.LoadRouteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LoadRouteButton.Location = new System.Drawing.Point(139, 451);
+            this.LoadRouteButton.Name = "LoadRouteButton";
+            this.LoadRouteButton.Size = new System.Drawing.Size(75, 23);
+            this.LoadRouteButton.TabIndex = 20;
+            this.LoadRouteButton.Text = "Load";
+            this.LoadRouteButton.UseVisualStyleBackColor = true;
+            this.LoadRouteButton.Click += new System.EventHandler(this.LoadRoute);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 11F);
@@ -312,6 +336,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1007, 690);
+            this.Controls.Add(this.LoadRouteButton);
+            this.Controls.Add(this.SaveRouteButton);
             this.Controls.Add(this.IdealSellDistance);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -370,6 +396,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox IdealSellDistance;
+        private System.Windows.Forms.Button SaveRouteButton;
+        private System.Windows.Forms.Button LoadRouteButton;
     }
 }
 

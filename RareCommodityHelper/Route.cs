@@ -152,6 +152,12 @@ public class RouteNode
     public RareGood Rare;
     public List<RareGood> SellHere;
 
+    public RouteNode()
+    {
+        Rare = null;
+        SellHere = null;
+    }
+
     public RouteNode(RareGood r)
     {
         Rare = r;
@@ -184,6 +190,7 @@ public class RoutePlanner
         route.Add(new RouteNode(closest));
         List<RareGood> currentRares = new List<RareGood>();
 
+        //float idealCutoff = 3.0f * idealDistance / 4.0f;
         while (route.Count < maxJumps)
         {
             RareGood current = route[route.Count - 1].Rare;
@@ -194,7 +201,7 @@ public class RoutePlanner
 
                 // Check to see if this step is inefficient in the scope of the leg
                 float distance = current.Distance(r);
-                if (distance > idealDistance) { return false; }
+                //if (distance > idealCutoff) { return false; }
                 r.Fitness = distance;
 
                 // Check to see if we have to sell here

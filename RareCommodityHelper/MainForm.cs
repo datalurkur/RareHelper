@@ -34,6 +34,7 @@ namespace RareCommodityHelper
 
         private Galaxy galaxy;
         private Dictionary<string,RareGood> rareData;
+        private List<RouteNode> currentRoute;
         private int rareColumn = 0;
         private bool rareAscending = true;
 
@@ -95,6 +96,8 @@ namespace RareCommodityHelper
             // Load spaaaace
             galaxy = new Galaxy();
             UpdateSystems();
+
+            currentRoute = null;
         }
 
         private void OnExit(object sender, EventArgs e)
@@ -288,13 +291,17 @@ namespace RareCommodityHelper
 
             RoutePlanner planner = new RoutePlanner(rareData.Values.ToList(), jumpDistance);
             StarSystem start = galaxy.Systems[CurrentSystem.Text];
-            List<RouteNode> route = planner.FindRoute(start, idealSellDistance, jumpsPerLeg, maxJumps);
+            currentRoute = planner.FindRoute(start, idealSellDistance, jumpsPerLeg, maxJumps);
+            OnRouteUpdated();
+        }
 
+        private void OnRouteUpdated()
+        {
             RouteResults.Items.Clear();
-            for (int i = 0; i < route.Count; i++)
+            for (int i = 0; i < currentRoute.Count; i++)
             {
-                RouteNode r = route[i];
-                string distanceToPrev = (i > 0) ? route[i - 1].Rare.Distance(r.Rare).ToString("0.00") : "N/A";
+                RouteNode r = currentRoute[i];
+                string distanceToPrev = (i > 0) ? currentRoute[i - 1].Rare.Distance(r.Rare).ToString("0.00") : "N/A";
 
                 ListViewItem newItem = new ListViewItem();
                 newItem.Text = r.Rare.LocationName;
@@ -302,17 +309,17 @@ namespace RareCommodityHelper
                 newItem.SubItems.Add(r.Rare.Station);
                 newItem.SubItems.Add(r.Rare.Name);
                 newItem.SubItems.Add(distanceToPrev);
-                if (route[i].SellHere.Count == 0)
+                if (currentRoute[i].SellHere.Count == 0)
                 {
                     newItem.SubItems.Add("N/A");
                     newItem.SubItems.Add("N/A");
                 }
-                for (int j = 0; j < route[i].SellHere.Count; j++)
+                for (int j = 0; j < currentRoute[i].SellHere.Count; j++)
                 {
-                    RareGood s = route[i].SellHere[j];
+                    RareGood s = currentRoute[i].SellHere[j];
                     newItem.SubItems.Add(s.Name);
                     newItem.SubItems.Add(s.Distance(r.Rare).ToString("0.00"));
-                    if (j < route[i].SellHere.Count - 1)
+                    if (j < currentRoute[i].SellHere.Count - 1)
                     {
                         RouteResults.Items.Add(newItem);
                         newItem = new ListViewItem();
@@ -350,6 +357,8 @@ namespace RareCommodityHelper
             DestinationSystem.Enabled = !isLoading;
             PathButton.Enabled = !isLoading;
             RouteButton.Enabled = !isLoading;
+            SaveRouteButton.Enabled = !isLoading;
+            LoadRouteButton.Enabled = !isLoading;
             LoadProgressBar.Visible = isLoading;
             LoadProgressLabel.Visible = isLoading;
         }
@@ -367,6 +376,31 @@ namespace RareCommodityHelper
             {
                 DestinationSystem.Text = RareResults.SelectedItems[0].Text;
             }
+        }
+
+        private void LoadRoute(object sender, EventArgs e)
+        {
+            if (LocalData<List<RouteNode>>.LoadLocalData("Route.xml", out currentRoute))
+            {
+                foreach (RouteNode r in currentRoute)
+                {
+                    r.Rare.Location = galaxy.Systems[r.Rare.LocationName];
+                    foreach (RareGood s in r.SellHere)
+                    {
+                        s.Location = galaxy.Systems[s.LocationName];
+                    }
+                }
+                OnRouteUpdated();
+            }
+            else
+            {
+                MessageBox.Show("Failed to load previous route.", "Fuck!", MessageBoxButtons.OK);
+            }
+        }
+
+        private void SaveRoute(object sender, EventArgs e)
+        {
+            LocalData<List<RouteNode>>.SaveLocalData(currentRoute, "Route.xml");
         }
     }
 }
