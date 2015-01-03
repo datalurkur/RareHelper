@@ -52,8 +52,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.IdealSellDistance = new System.Windows.Forms.TextBox();
-            this.SaveRouteButton = new System.Windows.Forms.Button();
-            this.LoadRouteButton = new System.Windows.Forms.Button();
+            this.QuickSaveRouteButton = new System.Windows.Forms.Button();
+            this.QuickLoadRouteButton = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.LoadButton = new System.Windows.Forms.Button();
             this.ResultsTabControl.SuspendLayout();
             this.RareResultsTab.SuspendLayout();
             this.PathResultsTab.SuspendLayout();
@@ -307,27 +309,47 @@
             this.IdealSellDistance.Size = new System.Drawing.Size(100, 18);
             this.IdealSellDistance.TabIndex = 18;
             // 
-            // SaveRouteButton
+            // QuickSaveRouteButton
             // 
-            this.SaveRouteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SaveRouteButton.Location = new System.Drawing.Point(13, 451);
-            this.SaveRouteButton.Name = "SaveRouteButton";
-            this.SaveRouteButton.Size = new System.Drawing.Size(75, 23);
-            this.SaveRouteButton.TabIndex = 19;
-            this.SaveRouteButton.Text = "Save";
-            this.SaveRouteButton.UseVisualStyleBackColor = true;
-            this.SaveRouteButton.Click += new System.EventHandler(this.SaveRoute);
+            this.QuickSaveRouteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.QuickSaveRouteButton.Location = new System.Drawing.Point(13, 451);
+            this.QuickSaveRouteButton.Name = "QuickSaveRouteButton";
+            this.QuickSaveRouteButton.Size = new System.Drawing.Size(95, 23);
+            this.QuickSaveRouteButton.TabIndex = 19;
+            this.QuickSaveRouteButton.Text = "Quick Save";
+            this.QuickSaveRouteButton.UseVisualStyleBackColor = true;
+            this.QuickSaveRouteButton.Click += new System.EventHandler(this.QuickSaveRoute);
             // 
-            // LoadRouteButton
+            // QuickLoadRouteButton
             // 
-            this.LoadRouteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.LoadRouteButton.Location = new System.Drawing.Point(139, 451);
-            this.LoadRouteButton.Name = "LoadRouteButton";
-            this.LoadRouteButton.Size = new System.Drawing.Size(75, 23);
-            this.LoadRouteButton.TabIndex = 20;
-            this.LoadRouteButton.Text = "Load";
-            this.LoadRouteButton.UseVisualStyleBackColor = true;
-            this.LoadRouteButton.Click += new System.EventHandler(this.LoadRoute);
+            this.QuickLoadRouteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.QuickLoadRouteButton.Location = new System.Drawing.Point(114, 451);
+            this.QuickLoadRouteButton.Name = "QuickLoadRouteButton";
+            this.QuickLoadRouteButton.Size = new System.Drawing.Size(100, 23);
+            this.QuickLoadRouteButton.TabIndex = 20;
+            this.QuickLoadRouteButton.Text = "Quick Load";
+            this.QuickLoadRouteButton.UseVisualStyleBackColor = true;
+            this.QuickLoadRouteButton.Click += new System.EventHandler(this.QuickLoadRoute);
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SaveButton.Location = new System.Drawing.Point(12, 480);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(96, 23);
+            this.SaveButton.TabIndex = 21;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            // 
+            // LoadButton
+            // 
+            this.LoadButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LoadButton.Location = new System.Drawing.Point(114, 480);
+            this.LoadButton.Name = "LoadButton";
+            this.LoadButton.Size = new System.Drawing.Size(100, 23);
+            this.LoadButton.TabIndex = 22;
+            this.LoadButton.Text = "Load";
+            this.LoadButton.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -336,8 +358,10 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1007, 690);
-            this.Controls.Add(this.LoadRouteButton);
-            this.Controls.Add(this.SaveRouteButton);
+            this.Controls.Add(this.LoadButton);
+            this.Controls.Add(this.SaveButton);
+            this.Controls.Add(this.QuickLoadRouteButton);
+            this.Controls.Add(this.QuickSaveRouteButton);
             this.Controls.Add(this.IdealSellDistance);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -396,8 +420,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox IdealSellDistance;
-        private System.Windows.Forms.Button SaveRouteButton;
-        private System.Windows.Forms.Button LoadRouteButton;
+        private System.Windows.Forms.Button QuickSaveRouteButton;
+        private System.Windows.Forms.Button QuickLoadRouteButton;
+        private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Button LoadButton;
     }
 }
 

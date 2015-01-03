@@ -92,6 +92,8 @@ namespace RareCommodityHelper
             JumpsPerLeg.Text = settings.JumpsPerLeg;
             MaxJumps.Text = settings.MaxJumps;
             IdealSellDistance.Text = settings.IdealSellDistance;
+            SaveButton.Click += FullSaveRoute;
+            LoadButton.Click += FullLoadRoute;
 
             // Load spaaaace
             galaxy = new Galaxy();
@@ -357,8 +359,8 @@ namespace RareCommodityHelper
             DestinationSystem.Enabled = !isLoading;
             PathButton.Enabled = !isLoading;
             RouteButton.Enabled = !isLoading;
-            SaveRouteButton.Enabled = !isLoading;
-            LoadRouteButton.Enabled = !isLoading;
+            QuickSaveRouteButton.Enabled = !isLoading;
+            QuickLoadRouteButton.Enabled = !isLoading;
             LoadProgressBar.Visible = isLoading;
             LoadProgressLabel.Visible = isLoading;
         }
@@ -378,9 +380,25 @@ namespace RareCommodityHelper
             }
         }
 
-        private void LoadRoute(object sender, EventArgs e)
+        private void QuickLoadRoute(object sender, EventArgs e)
         {
-            if (LocalData<List<RouteNode>>.LoadLocalData("Route.xml", out currentRoute))
+            LoadRoute("Route.xml");
+        }
+
+        private void FullLoadRoute(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.RestoreDirectory = true;
+
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                LoadRoute(open.FileName);
+            }
+        }
+
+        private void LoadRoute(string fileName)
+        {
+            if (LocalData<List<RouteNode>>.LoadLocalData(fileName, out currentRoute))
             {
                 foreach (RouteNode r in currentRoute)
                 {
@@ -398,9 +416,25 @@ namespace RareCommodityHelper
             }
         }
 
-        private void SaveRoute(object sender, EventArgs e)
+        private void QuickSaveRoute(object sender, EventArgs e)
         {
-            LocalData<List<RouteNode>>.SaveLocalData(currentRoute, "Route.xml");
+            SaveRoute("Route.xml");
+        }
+
+        private void FullSaveRoute(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.RestoreDirectory = true;
+
+            if(save.ShowDialog() == DialogResult.OK)
+            {
+                SaveRoute(save.FileName);
+            }
+        }
+
+        private void SaveRoute(string fileName)
+        {
+            LocalData<List<RouteNode>>.SaveLocalData(currentRoute, fileName);
         }
     }
 }
