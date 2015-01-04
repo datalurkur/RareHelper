@@ -373,7 +373,7 @@
       <Name>Giant Irukama Snails</Name>
       <LocationName>Irukama</LocationName>
       <Station>Blaauw City</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>329ls</StationDistance>
       <Allegiance>Unknown</Allegiance>
       <LastKnownCost>1810</LastKnownCost>
     </RareGood>
@@ -389,7 +389,7 @@
       <Name>Jaroua Rice</Name>
       <LocationName>Jaroua</LocationName>
       <Station>Mccool City</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>143ls</StationDistance>
       <Allegiance>Unknown</Allegiance>
       <LastKnownCost>0</LastKnownCost>
     </RareGood>
