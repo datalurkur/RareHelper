@@ -573,7 +573,7 @@
       <Name>Njangari Saddles</Name>
       <LocationName>Njangari</LocationName>
       <Station>Lee Hub</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>21467ls</StationDistance>
       <Allegiance>Unknown</Allegiance>
       <LastKnownCost>0</LastKnownCost>
     </RareGood>
@@ -645,7 +645,7 @@
       <Name>Tarach Spice</Name>
       <LocationName>Tarach Tor</LocationName>
       <Station>Tranquillity</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>356ls</StationDistance>
       <Allegiance>Independent</Allegiance>
       <LastKnownCost>1056</LastKnownCost>
     </RareGood>
@@ -781,7 +781,7 @@
       <Name>Yaso Kondi Leaf</Name>
       <LocationName>Yaso Kondi</LocationName>
       <Station>Wheeler Market</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>116ls</StationDistance>
       <Allegiance>Empire</Allegiance>
       <LastKnownCost>6060</LastKnownCost>
     </RareGood>
