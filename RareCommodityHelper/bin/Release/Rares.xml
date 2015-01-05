@@ -285,7 +285,7 @@
       <Name>Goman Yaupon Coffee</Name>
       <LocationName>Goman</LocationName>
       <Station>Gustav Sporer Port</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>273ls</StationDistance>
       <Allegiance>Empire</Allegiance>
       <LastKnownCost>1451</LastKnownCost>
     </RareGood>
@@ -765,7 +765,7 @@
       <Name>Wuthielo Ku Froth</Name>
       <LocationName>Wuthielo Ku</LocationName>
       <Station>Tarter Dock</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>175ls</StationDistance>
       <Allegiance>Empire</Allegiance>
       <LastKnownCost>420</LastKnownCost>
     </RareGood>
