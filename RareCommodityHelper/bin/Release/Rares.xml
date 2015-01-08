@@ -285,7 +285,7 @@
       <Name>Goman Yaupon Coffee</Name>
       <LocationName>Goman</LocationName>
       <Station>Gustav Sporer Port</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>273ls</StationDistance>
       <Allegiance>Empire</Allegiance>
       <LastKnownCost>1451</LastKnownCost>
     </RareGood>
@@ -373,7 +373,7 @@
       <Name>Giant Irukama Snails</Name>
       <LocationName>Irukama</LocationName>
       <Station>Blaauw City</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>329ls</StationDistance>
       <Allegiance>Unknown</Allegiance>
       <LastKnownCost>1810</LastKnownCost>
     </RareGood>
@@ -389,7 +389,7 @@
       <Name>Jaroua Rice</Name>
       <LocationName>Jaroua</LocationName>
       <Station>Mccool City</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>143ls</StationDistance>
       <Allegiance>Unknown</Allegiance>
       <LastKnownCost>0</LastKnownCost>
     </RareGood>
@@ -453,7 +453,7 @@
       <Name>Kongga Ale</Name>
       <LocationName>Kongga</LocationName>
       <Station>Laplace Ring</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>253ls</StationDistance>
       <Allegiance>Unknown</Allegiance>
       <LastKnownCost>585</LastKnownCost>
     </RareGood>
@@ -621,7 +621,7 @@
       <Name>Rusani Old Smokey</Name>
       <LocationName>Rusani</LocationName>
       <Station>Fernandes Market</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>74ls</StationDistance>
       <Allegiance>Unknown</Allegiance>
       <LastKnownCost>5810</LastKnownCost>
     </RareGood>
@@ -765,7 +765,7 @@
       <Name>Wuthielo Ku Froth</Name>
       <LocationName>Wuthielo Ku</LocationName>
       <Station>Tarter Dock</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>175ls</StationDistance>
       <Allegiance>Empire</Allegiance>
       <LastKnownCost>420</LastKnownCost>
     </RareGood>

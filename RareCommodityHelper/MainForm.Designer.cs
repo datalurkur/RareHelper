@@ -74,7 +74,7 @@
             this.CurrentSystem.FormattingEnabled = true;
             this.CurrentSystem.Location = new System.Drawing.Point(17, 21);
             this.CurrentSystem.Name = "CurrentSystem";
-            this.CurrentSystem.Size = new System.Drawing.Size(201, 19);
+            this.CurrentSystem.Size = new System.Drawing.Size(201, 22);
             this.CurrentSystem.TabIndex = 0;
             // 
             // label1
@@ -82,7 +82,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(14, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 11);
+            this.label1.Size = new System.Drawing.Size(119, 14);
             this.label1.TabIndex = 1;
             this.label1.Text = "Current System";
             // 
@@ -91,7 +91,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 46);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(124, 11);
+            this.label2.Size = new System.Drawing.Size(143, 14);
             this.label2.TabIndex = 2;
             this.label2.Text = "Max Jump Distance";
             // 
@@ -100,7 +100,7 @@
             this.MaxJumpDistance.BackColor = System.Drawing.Color.Silver;
             this.MaxJumpDistance.Location = new System.Drawing.Point(17, 59);
             this.MaxJumpDistance.Name = "MaxJumpDistance";
-            this.MaxJumpDistance.Size = new System.Drawing.Size(201, 18);
+            this.MaxJumpDistance.Size = new System.Drawing.Size(201, 21);
             this.MaxJumpDistance.TabIndex = 3;
             // 
             // RareResults
@@ -112,7 +112,7 @@
             this.RareResults.FullRowSelect = true;
             this.RareResults.Location = new System.Drawing.Point(3, 3);
             this.RareResults.Name = "RareResults";
-            this.RareResults.Size = new System.Drawing.Size(745, 634);
+            this.RareResults.Size = new System.Drawing.Size(745, 631);
             this.RareResults.TabIndex = 4;
             this.RareResults.UseCompatibleStateImageBehavior = false;
             this.RareResults.View = System.Windows.Forms.View.Details;
@@ -123,7 +123,7 @@
             this.ComputeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ComputeButton.Location = new System.Drawing.Point(17, 99);
             this.ComputeButton.Name = "ComputeButton";
-            this.ComputeButton.Size = new System.Drawing.Size(202, 19);
+            this.ComputeButton.Size = new System.Drawing.Size(202, 23);
             this.ComputeButton.TabIndex = 5;
             this.ComputeButton.Text = "Compute Rare Distances";
             this.ComputeButton.UseVisualStyleBackColor = false;
@@ -145,7 +145,7 @@
             this.LoadProgressLabel.AutoSize = true;
             this.LoadProgressLabel.Location = new System.Drawing.Point(14, 647);
             this.LoadProgressLabel.Name = "LoadProgressLabel";
-            this.LoadProgressLabel.Size = new System.Drawing.Size(180, 11);
+            this.LoadProgressLabel.Size = new System.Drawing.Size(207, 14);
             this.LoadProgressLabel.TabIndex = 7;
             this.LoadProgressLabel.Text = "Fetching Data From Web...";
             this.LoadProgressLabel.Visible = false;
@@ -155,7 +155,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(16, 175);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(131, 11);
+            this.label3.Size = new System.Drawing.Size(151, 14);
             this.label3.TabIndex = 8;
             this.label3.Text = "Destination System";
             // 
@@ -167,7 +167,7 @@
             this.DestinationSystem.FormattingEnabled = true;
             this.DestinationSystem.Location = new System.Drawing.Point(18, 190);
             this.DestinationSystem.Name = "DestinationSystem";
-            this.DestinationSystem.Size = new System.Drawing.Size(200, 19);
+            this.DestinationSystem.Size = new System.Drawing.Size(200, 22);
             this.DestinationSystem.TabIndex = 9;
             // 
             // PathButton
@@ -197,10 +197,10 @@
             // RareResultsTab
             // 
             this.RareResultsTab.Controls.Add(this.RareResults);
-            this.RareResultsTab.Location = new System.Drawing.Point(4, 21);
+            this.RareResultsTab.Location = new System.Drawing.Point(4, 24);
             this.RareResultsTab.Name = "RareResultsTab";
             this.RareResultsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.RareResultsTab.Size = new System.Drawing.Size(751, 640);
+            this.RareResultsTab.Size = new System.Drawing.Size(751, 637);
             this.RareResultsTab.TabIndex = 0;
             this.RareResultsTab.Text = "Rare Distances";
             this.RareResultsTab.UseVisualStyleBackColor = true;
@@ -208,10 +208,10 @@
             // PathResultsTab
             // 
             this.PathResultsTab.Controls.Add(this.PathResults);
-            this.PathResultsTab.Location = new System.Drawing.Point(4, 21);
+            this.PathResultsTab.Location = new System.Drawing.Point(4, 24);
             this.PathResultsTab.Name = "PathResultsTab";
             this.PathResultsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.PathResultsTab.Size = new System.Drawing.Size(751, 640);
+            this.PathResultsTab.Size = new System.Drawing.Size(751, 637);
             this.PathResultsTab.TabIndex = 1;
             this.PathResultsTab.Text = "Path";
             this.PathResultsTab.UseVisualStyleBackColor = true;
@@ -225,7 +225,7 @@
             this.PathResults.FullRowSelect = true;
             this.PathResults.Location = new System.Drawing.Point(3, 3);
             this.PathResults.Name = "PathResults";
-            this.PathResults.Size = new System.Drawing.Size(745, 634);
+            this.PathResults.Size = new System.Drawing.Size(745, 631);
             this.PathResults.TabIndex = 5;
             this.PathResults.UseCompatibleStateImageBehavior = false;
             this.PathResults.View = System.Windows.Forms.View.Details;
@@ -233,10 +233,10 @@
             // RouteTab
             // 
             this.RouteTab.Controls.Add(this.RouteResults);
-            this.RouteTab.Location = new System.Drawing.Point(4, 21);
+            this.RouteTab.Location = new System.Drawing.Point(4, 24);
             this.RouteTab.Name = "RouteTab";
             this.RouteTab.Padding = new System.Windows.Forms.Padding(3);
-            this.RouteTab.Size = new System.Drawing.Size(751, 640);
+            this.RouteTab.Size = new System.Drawing.Size(751, 637);
             this.RouteTab.TabIndex = 2;
             this.RouteTab.Text = "Route";
             this.RouteTab.UseVisualStyleBackColor = true;
@@ -250,7 +250,7 @@
             this.RouteResults.FullRowSelect = true;
             this.RouteResults.Location = new System.Drawing.Point(3, 3);
             this.RouteResults.Name = "RouteResults";
-            this.RouteResults.Size = new System.Drawing.Size(745, 634);
+            this.RouteResults.Size = new System.Drawing.Size(745, 631);
             this.RouteResults.TabIndex = 6;
             this.RouteResults.UseCompatibleStateImageBehavior = false;
             this.RouteResults.View = System.Windows.Forms.View.Details;
@@ -269,7 +269,7 @@
             // 
             this.MaxJumps.Location = new System.Drawing.Point(14, 397);
             this.MaxJumps.Name = "MaxJumps";
-            this.MaxJumps.Size = new System.Drawing.Size(100, 18);
+            this.MaxJumps.Size = new System.Drawing.Size(100, 21);
             this.MaxJumps.TabIndex = 13;
             // 
             // label4
@@ -277,7 +277,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 383);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(68, 11);
+            this.label4.Size = new System.Drawing.Size(79, 14);
             this.label4.TabIndex = 14;
             this.label4.Text = "Max Jumps";
             // 
@@ -285,7 +285,7 @@
             // 
             this.JumpsPerLeg.Location = new System.Drawing.Point(14, 362);
             this.JumpsPerLeg.Name = "JumpsPerLeg";
-            this.JumpsPerLeg.Size = new System.Drawing.Size(100, 18);
+            this.JumpsPerLeg.Size = new System.Drawing.Size(100, 21);
             this.JumpsPerLeg.TabIndex = 15;
             // 
             // label5
@@ -293,7 +293,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(12, 348);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(96, 11);
+            this.label5.Size = new System.Drawing.Size(111, 14);
             this.label5.TabIndex = 16;
             this.label5.Text = "Jumps Per Leg";
             // 
@@ -302,7 +302,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(12, 311);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(138, 11);
+            this.label6.Size = new System.Drawing.Size(159, 14);
             this.label6.TabIndex = 17;
             this.label6.Text = "Ideal Sell Distance";
             // 
@@ -310,7 +310,7 @@
             // 
             this.IdealSellDistance.Location = new System.Drawing.Point(14, 325);
             this.IdealSellDistance.Name = "IdealSellDistance";
-            this.IdealSellDistance.Size = new System.Drawing.Size(100, 18);
+            this.IdealSellDistance.Size = new System.Drawing.Size(100, 21);
             this.IdealSellDistance.TabIndex = 18;
             // 
             // QuickSaveRouteButton
@@ -362,7 +362,7 @@
             this.RareGoodSelector.FormattingEnabled = true;
             this.RareGoodSelector.Location = new System.Drawing.Point(12, 541);
             this.RareGoodSelector.Name = "RareGoodSelector";
-            this.RareGoodSelector.Size = new System.Drawing.Size(202, 19);
+            this.RareGoodSelector.Size = new System.Drawing.Size(202, 22);
             this.RareGoodSelector.TabIndex = 23;
             // 
             // RareGoodLabel
@@ -370,7 +370,7 @@
             this.RareGoodLabel.AutoSize = true;
             this.RareGoodLabel.Location = new System.Drawing.Point(12, 527);
             this.RareGoodLabel.Name = "RareGoodLabel";
-            this.RareGoodLabel.Size = new System.Drawing.Size(68, 11);
+            this.RareGoodLabel.Size = new System.Drawing.Size(79, 14);
             this.RareGoodLabel.TabIndex = 24;
             this.RareGoodLabel.Text = "Rare Good";
             // 
@@ -396,7 +396,7 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 11F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
