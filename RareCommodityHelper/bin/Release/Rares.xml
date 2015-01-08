@@ -453,7 +453,7 @@
       <Name>Kongga Ale</Name>
       <LocationName>Kongga</LocationName>
       <Station>Laplace Ring</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>253ls</StationDistance>
       <Allegiance>Unknown</Allegiance>
       <LastKnownCost>585</LastKnownCost>
     </RareGood>
@@ -621,7 +621,7 @@
       <Name>Rusani Old Smokey</Name>
       <LocationName>Rusani</LocationName>
       <Station>Fernandes Market</Station>
-      <StationDistance>Unknown</StationDistance>
+      <StationDistance>74ls</StationDistance>
       <Allegiance>Unknown</Allegiance>
       <LastKnownCost>5810</LastKnownCost>
     </RareGood>
