@@ -45,6 +45,11 @@
             this.PathResults = new System.Windows.Forms.ListView();
             this.RouteTab = new System.Windows.Forms.TabPage();
             this.RouteResults = new System.Windows.Forms.ListView();
+            this.SettingsTab = new System.Windows.Forms.TabPage();
+            this.logDirectoryNote = new System.Windows.Forms.Label();
+            this.applyLogDirectoryButton = new System.Windows.Forms.Button();
+            this.LogDirectoryTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.RouteButton = new System.Windows.Forms.Button();
             this.MaxJumps = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -60,10 +65,12 @@
             this.RareGoodLabel = new System.Windows.Forms.Label();
             this.BlacklistButton = new System.Windows.Forms.Button();
             this.UnblacklistButton = new System.Windows.Forms.Button();
+            this.UpdateFromLogButton = new System.Windows.Forms.Button();
             this.ResultsTabControl.SuspendLayout();
             this.RareResultsTab.SuspendLayout();
             this.PathResultsTab.SuspendLayout();
             this.RouteTab.SuspendLayout();
+            this.SettingsTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // CurrentSystem
@@ -89,7 +96,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 46);
+            this.label2.Location = new System.Drawing.Point(16, 84);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(143, 14);
             this.label2.TabIndex = 2;
@@ -98,7 +105,7 @@
             // MaxJumpDistance
             // 
             this.MaxJumpDistance.BackColor = System.Drawing.Color.Silver;
-            this.MaxJumpDistance.Location = new System.Drawing.Point(17, 59);
+            this.MaxJumpDistance.Location = new System.Drawing.Point(19, 97);
             this.MaxJumpDistance.Name = "MaxJumpDistance";
             this.MaxJumpDistance.Size = new System.Drawing.Size(201, 21);
             this.MaxJumpDistance.TabIndex = 3;
@@ -121,7 +128,7 @@
             // 
             this.ComputeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ComputeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ComputeButton.Location = new System.Drawing.Point(17, 99);
+            this.ComputeButton.Location = new System.Drawing.Point(19, 137);
             this.ComputeButton.Name = "ComputeButton";
             this.ComputeButton.Size = new System.Drawing.Size(202, 23);
             this.ComputeButton.TabIndex = 5;
@@ -188,6 +195,7 @@
             this.ResultsTabControl.Controls.Add(this.RareResultsTab);
             this.ResultsTabControl.Controls.Add(this.PathResultsTab);
             this.ResultsTabControl.Controls.Add(this.RouteTab);
+            this.ResultsTabControl.Controls.Add(this.SettingsTab);
             this.ResultsTabControl.Location = new System.Drawing.Point(236, 13);
             this.ResultsTabControl.Name = "ResultsTabControl";
             this.ResultsTabControl.SelectedIndex = 0;
@@ -254,6 +262,60 @@
             this.RouteResults.TabIndex = 6;
             this.RouteResults.UseCompatibleStateImageBehavior = false;
             this.RouteResults.View = System.Windows.Forms.View.Details;
+            // 
+            // SettingsTab
+            // 
+            this.SettingsTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.SettingsTab.Controls.Add(this.logDirectoryNote);
+            this.SettingsTab.Controls.Add(this.applyLogDirectoryButton);
+            this.SettingsTab.Controls.Add(this.LogDirectoryTextBox);
+            this.SettingsTab.Controls.Add(this.label7);
+            this.SettingsTab.ForeColor = System.Drawing.Color.Gainsboro;
+            this.SettingsTab.Location = new System.Drawing.Point(4, 24);
+            this.SettingsTab.Name = "SettingsTab";
+            this.SettingsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.SettingsTab.Size = new System.Drawing.Size(751, 637);
+            this.SettingsTab.TabIndex = 3;
+            this.SettingsTab.Text = "Settings";
+            // 
+            // logDirectoryNote
+            // 
+            this.logDirectoryNote.AutoSize = true;
+            this.logDirectoryNote.Location = new System.Drawing.Point(36, 62);
+            this.logDirectoryNote.Name = "logDirectoryNote";
+            this.logDirectoryNote.Size = new System.Drawing.Size(671, 14);
+            this.logDirectoryNote.TabIndex = 11;
+            this.logDirectoryNote.Text = "You must enable verbose logging, or we won\'t be able to tell what system you\'re i" +
+    "n.";
+            // 
+            // applyLogDirectoryButton
+            // 
+            this.applyLogDirectoryButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.applyLogDirectoryButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.applyLogDirectoryButton.ForeColor = System.Drawing.Color.Silver;
+            this.applyLogDirectoryButton.Location = new System.Drawing.Point(656, 22);
+            this.applyLogDirectoryButton.Name = "applyLogDirectoryButton";
+            this.applyLogDirectoryButton.Size = new System.Drawing.Size(75, 23);
+            this.applyLogDirectoryButton.TabIndex = 10;
+            this.applyLogDirectoryButton.Text = "Apply";
+            this.applyLogDirectoryButton.UseVisualStyleBackColor = false;
+            this.applyLogDirectoryButton.Click += new System.EventHandler(this.UpdateLogDirectory);
+            // 
+            // LogDirectoryTextBox
+            // 
+            this.LogDirectoryTextBox.Location = new System.Drawing.Point(150, 22);
+            this.LogDirectoryTextBox.Name = "LogDirectoryTextBox";
+            this.LogDirectoryTextBox.Size = new System.Drawing.Size(500, 21);
+            this.LogDirectoryTextBox.TabIndex = 9;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(25, 26);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(119, 14);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Log Directory:";
             // 
             // RouteButton
             // 
@@ -394,6 +456,18 @@
             this.UnblacklistButton.Text = "Un-Blacklist";
             this.UnblacklistButton.UseVisualStyleBackColor = true;
             // 
+            // UpdateFromLogButton
+            // 
+            this.UpdateFromLogButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.UpdateFromLogButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.UpdateFromLogButton.Location = new System.Drawing.Point(18, 49);
+            this.UpdateFromLogButton.Name = "UpdateFromLogButton";
+            this.UpdateFromLogButton.Size = new System.Drawing.Size(202, 23);
+            this.UpdateFromLogButton.TabIndex = 27;
+            this.UpdateFromLogButton.Text = "Update From Log";
+            this.UpdateFromLogButton.UseVisualStyleBackColor = false;
+            this.UpdateFromLogButton.Click += new System.EventHandler(this.GetCurrentSystemFromLog);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
@@ -401,6 +475,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1007, 690);
+            this.Controls.Add(this.UpdateFromLogButton);
             this.Controls.Add(this.UnblacklistButton);
             this.Controls.Add(this.BlacklistButton);
             this.Controls.Add(this.RareGoodLabel);
@@ -436,6 +511,8 @@
             this.RareResultsTab.ResumeLayout(false);
             this.PathResultsTab.ResumeLayout(false);
             this.RouteTab.ResumeLayout(false);
+            this.SettingsTab.ResumeLayout(false);
+            this.SettingsTab.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -475,6 +552,12 @@
         private System.Windows.Forms.Label RareGoodLabel;
         private System.Windows.Forms.Button BlacklistButton;
         private System.Windows.Forms.Button UnblacklistButton;
+        private System.Windows.Forms.TabPage SettingsTab;
+        private System.Windows.Forms.Button applyLogDirectoryButton;
+        private System.Windows.Forms.TextBox LogDirectoryTextBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label logDirectoryNote;
+        private System.Windows.Forms.Button UpdateFromLogButton;
     }
 }
 

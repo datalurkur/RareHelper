@@ -20,6 +20,7 @@ namespace RareCommodityHelper
             public string JumpsPerLeg;
             public string MaxJumps;
             public string IdealSellDistance;
+            public string LogDirectory;
 
             public List<string> Blacklist;
 
@@ -31,6 +32,7 @@ namespace RareCommodityHelper
                 JumpsPerLeg = "4";
                 MaxJumps = "10";
                 IdealSellDistance = "150";
+                LogDirectory = null;
 
                 Blacklist = new List<string>();
             }
@@ -43,6 +45,7 @@ namespace RareCommodityHelper
         private int rareColumn = 0;
         private bool rareAscending = true;
         private List<string> blacklist;
+        private LogWatcher LogWatcher;
 
         public MainForm()
         {
@@ -105,12 +108,16 @@ namespace RareCommodityHelper
             RareGoodSelector.DrawItem += DrawRaresComboBox;
             BlacklistButton.Click += Blacklist;
             UnblacklistButton.Click += Unblacklist;
+            LogDirectoryTextBox.Text = settings.LogDirectory;
 
             blacklist = settings.Blacklist;
 
             // Load spaaaace
             galaxy = new Galaxy();
             UpdateSystems();
+
+            // Start tracking the player.
+            LogWatcher = new LogWatcher(settings.LogDirectory);
 
             currentRoute = null;
         }
@@ -126,7 +133,13 @@ namespace RareCommodityHelper
             settings.MaxJumps = MaxJumps.Text;
             settings.IdealSellDistance = IdealSellDistance.Text;
             settings.Blacklist = blacklist;
+            if (LogWatcher != null)
+                settings.LogDirectory = LogWatcher.LogDirectory();
+            else
+                settings.LogDirectory = LogDirectoryTextBox.Text;
             LocalData<Settings>.SaveLocalData(settings, "Settings.xml");
+
+            if (LogWatcher != null) LogWatcher.ShutDown();
         }
 
         private async void UpdateSystems()
@@ -513,6 +526,44 @@ namespace RareCommodityHelper
             string r = RareGoodSelector.Text;
             blacklist.Remove(r);
             availableRares.Add(r, rareData[r]);
+        }
+
+        private void UpdateLogDirectory(object sender, EventArgs e)
+        {
+            try
+            {
+                var newWatcher = new LogWatcher(LogDirectoryTextBox.Text);
+                newWatcher.OnSystemChanged += StarSystemChanged;
+                if (LogWatcher != null)
+                {
+                    LogWatcher.ShutDown();
+                }
+                LogWatcher = newWatcher;
+                logDirectoryNote.Text = "Watcher updated";
+            }
+            catch (Exception exc)
+            {
+                logDirectoryNote.Text = "Could not watch log directory: " + exc;
+            }
+        }
+
+        private void StarSystemChanged(StarSystem newSystem)
+        {
+            if (newSystem == null) return;
+
+            // Broadcast is sent by a background thread -- cannot set text directly.
+            CurrentSystem.Invoke((Action) delegate
+            {
+                this.Text = newSystem.Name;
+            });
+        }
+
+        private void GetCurrentSystemFromLog(object sender, EventArgs e)
+        {
+            if (LogWatcher == null) return;
+            var loc = LogWatcher.CurrentSystem();
+            if (loc == null) return;
+            CurrentSystem.Text = loc.Name;
         }
     }
 }
