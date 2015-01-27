@@ -66,6 +66,8 @@
             this.BlacklistButton = new System.Windows.Forms.Button();
             this.UnblacklistButton = new System.Windows.Forms.Button();
             this.UpdateFromLogButton = new System.Windows.Forms.Button();
+            this.ReadDirectionsCheckBox = new System.Windows.Forms.CheckBox();
+            this.ReadDirectionsLabel = new System.Windows.Forms.Label();
             this.ResultsTabControl.SuspendLayout();
             this.RareResultsTab.SuspendLayout();
             this.PathResultsTab.SuspendLayout();
@@ -266,6 +268,8 @@
             // SettingsTab
             // 
             this.SettingsTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.SettingsTab.Controls.Add(this.ReadDirectionsCheckBox);
+            this.SettingsTab.Controls.Add(this.ReadDirectionsLabel);
             this.SettingsTab.Controls.Add(this.logDirectoryNote);
             this.SettingsTab.Controls.Add(this.applyLogDirectoryButton);
             this.SettingsTab.Controls.Add(this.LogDirectoryTextBox);
@@ -281,7 +285,7 @@
             // logDirectoryNote
             // 
             this.logDirectoryNote.AutoSize = true;
-            this.logDirectoryNote.Location = new System.Drawing.Point(36, 62);
+            this.logDirectoryNote.Location = new System.Drawing.Point(36, 48);
             this.logDirectoryNote.Name = "logDirectoryNote";
             this.logDirectoryNote.Size = new System.Drawing.Size(671, 14);
             this.logDirectoryNote.TabIndex = 11;
@@ -468,6 +472,27 @@
             this.UpdateFromLogButton.UseVisualStyleBackColor = false;
             this.UpdateFromLogButton.Click += new System.EventHandler(this.GetCurrentSystemFromLog);
             // 
+            // ReadDirectionsCheckBox
+            // 
+            this.ReadDirectionsCheckBox.AutoSize = true;
+            this.ReadDirectionsCheckBox.Location = new System.Drawing.Point(28, 100);
+            this.ReadDirectionsCheckBox.Name = "ReadDirectionsCheckBox";
+            this.ReadDirectionsCheckBox.Size = new System.Drawing.Size(149, 18);
+            this.ReadDirectionsCheckBox.TabIndex = 12;
+            this.ReadDirectionsCheckBox.Text = "Read Directions";
+            this.ReadDirectionsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ReadDirectionsLabel
+            // 
+            this.ReadDirectionsLabel.AutoSize = true;
+            this.ReadDirectionsLabel.Location = new System.Drawing.Point(36, 121);
+            this.ReadDirectionsLabel.MaximumSize = new System.Drawing.Size(700, 0);
+            this.ReadDirectionsLabel.Name = "ReadDirectionsLabel";
+            this.ReadDirectionsLabel.Size = new System.Drawing.Size(679, 28);
+            this.ReadDirectionsLabel.TabIndex = 11;
+            this.ReadDirectionsLabel.Text = "When following a path, read the next system to navigate to after each system shif" +
+    "t. Requires the Log Directory to be set correctly.";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
@@ -558,6 +583,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label logDirectoryNote;
         private System.Windows.Forms.Button UpdateFromLogButton;
+        private System.Windows.Forms.CheckBox ReadDirectionsCheckBox;
+        private System.Windows.Forms.Label ReadDirectionsLabel;
     }
 }
 

@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading;
 using System.Collections.Concurrent;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace RareCommodityHelper
 {
@@ -60,13 +61,16 @@ namespace RareCommodityHelper
                 StarSystem x = CurrentSystem();
                 if (x != null && (lastKnown == null || x.Name != lastKnown.Name))
                 {
+                    Debug.WriteLine("Broadcasting arrival at " + x.Name);
+
                     // Note: since we only check once a second, this isn't sufficient to
                     // send a message saying "the player went from system Y to X". In
                     // particular, on startup we'll process the full log file in less
                     // than a second, and this thread will skip a lot of systems. We'll
                     // need to use a queue if we want to build maps using the player's
                     // travels.
-                    if (OnSystemChanged != null) OnSystemChanged(x);
+                    if (OnSystemChanged != null)
+                        OnSystemChanged(x);
 
                     lastKnown = x;
                 }
@@ -82,7 +86,7 @@ namespace RareCommodityHelper
         //   3: body (unused)
         //   4, 5, 6: x, y, z coordinates
         static private Regex ARRIVE_IN_SYSTEM_REGEX =
-            new Regex("System:(\\d+)\\((.*?)\\).*?Body:(\\d+) Pos:\\((\\d+\\.\\d*),(\\d+\\.\\d*),(\\d+\\.\\d*)\\)");
+            new Regex("System:(\\d+)\\((.*?)\\).*?Body:(\\d+) Pos:\\((-?\\d+\\.\\d*),(-?\\d+\\.\\d*),(-?\\d+\\.\\d*)\\)");
 
         static private Regex NETLOG_FILE_REGEX = new Regex("netLog\\.[.\\d]+");
 
@@ -122,7 +126,7 @@ namespace RareCommodityHelper
 
         private void ReadLogFile(string logFile)
         {
-            Console.WriteLine("Reading from file: " + logFile);
+            Debug.WriteLine("Reading from file: " + logFile);
             using (FileStream fs = new FileStream
                 (logFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
@@ -161,6 +165,7 @@ namespace RareCommodityHelper
             {
                 if (currentSystem == null || newSystem.Name != currentSystem.Name)
                 {
+                    Debug.WriteLine("Found system: " + newSystem.Name);
                     currentSystem = newSystem;
                 }
             }
@@ -175,6 +180,7 @@ namespace RareCommodityHelper
                 // will start with "150102...". So we should always be reading the max filename.
                 if (currentLogFile.CompareTo(e.Name) < 0)
                 {
+                    Debug.WriteLine("Found new log file: " + e.Name);
                     currentLogFile = e.Name;
                 }
             }

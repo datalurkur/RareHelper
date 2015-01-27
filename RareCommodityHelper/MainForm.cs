@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Speech.Synthesis;
 
 namespace RareCommodityHelper
 {
@@ -21,6 +22,7 @@ namespace RareCommodityHelper
             public string MaxJumps;
             public string IdealSellDistance;
             public string LogDirectory;
+            public bool ReadDirections;
 
             public List<string> Blacklist;
 
@@ -33,6 +35,7 @@ namespace RareCommodityHelper
                 MaxJumps = "10";
                 IdealSellDistance = "150";
                 LogDirectory = null;
+                ReadDirections = true;
 
                 Blacklist = new List<string>();
             }
@@ -45,7 +48,9 @@ namespace RareCommodityHelper
         private int rareColumn = 0;
         private bool rareAscending = true;
         private List<string> blacklist;
-        private LogWatcher LogWatcher;
+        private LogWatcher logWatcher;
+        private List<PathNode> currentPath;
+        private SpeechSynthesizer speechSynthesizer;
 
         public MainForm()
         {
@@ -109,15 +114,20 @@ namespace RareCommodityHelper
             BlacklistButton.Click += Blacklist;
             UnblacklistButton.Click += Unblacklist;
             LogDirectoryTextBox.Text = settings.LogDirectory;
+            ReadDirectionsCheckBox.Checked = settings.ReadDirections;
 
             blacklist = settings.Blacklist;
+
+            speechSynthesizer = new SpeechSynthesizer();
+            speechSynthesizer.SetOutputToDefaultAudioDevice();
 
             // Load spaaaace
             galaxy = new Galaxy();
             UpdateSystems();
 
             // Start tracking the player.
-            LogWatcher = new LogWatcher(settings.LogDirectory);
+            logWatcher = new LogWatcher(settings.LogDirectory);
+            logWatcher.OnSystemChanged += StarSystemChanged;
 
             currentRoute = null;
         }
@@ -133,13 +143,14 @@ namespace RareCommodityHelper
             settings.MaxJumps = MaxJumps.Text;
             settings.IdealSellDistance = IdealSellDistance.Text;
             settings.Blacklist = blacklist;
-            if (LogWatcher != null)
-                settings.LogDirectory = LogWatcher.LogDirectory();
+            if (logWatcher != null)
+                settings.LogDirectory = logWatcher.LogDirectory();
             else
                 settings.LogDirectory = LogDirectoryTextBox.Text;
+            settings.ReadDirections = ReadDirectionsCheckBox.Checked;
             LocalData<Settings>.SaveLocalData(settings, "Settings.xml");
 
-            if (LogWatcher != null) LogWatcher.ShutDown();
+            if (logWatcher != null) logWatcher.ShutDown();
         }
 
         private async void UpdateSystems()
@@ -273,6 +284,7 @@ namespace RareCommodityHelper
                 newItem.SubItems.Add(n.HScore.ToString("0.00"));
                 PathResults.Items.Add(newItem);
             }
+            currentPath = path;
         }
 
         private void ComputeRoute(object sender, EventArgs args)
@@ -534,11 +546,11 @@ namespace RareCommodityHelper
             {
                 var newWatcher = new LogWatcher(LogDirectoryTextBox.Text);
                 newWatcher.OnSystemChanged += StarSystemChanged;
-                if (LogWatcher != null)
+                if (logWatcher != null)
                 {
-                    LogWatcher.ShutDown();
+                    logWatcher.ShutDown();
                 }
-                LogWatcher = newWatcher;
+                logWatcher = newWatcher;
                 logDirectoryNote.Text = "Watcher updated";
             }
             catch (Exception exc)
@@ -556,12 +568,62 @@ namespace RareCommodityHelper
             {
                 this.Text = newSystem.Name;
             });
+
+            // Check to see if we should announce the next system.
+            var shouldReadNextSystem = false;
+            ReadDirectionsCheckBox.Invoke((Action) delegate
+            {
+                shouldReadNextSystem = ReadDirectionsCheckBox.Checked;
+            });
+
+            if (shouldReadNextSystem) ReadNextSystem(newSystem);
+        }
+
+        private void ReadNextSystem(StarSystem currentSystem)
+        {
+            if (currentPath == null || currentSystem == null) return;
+
+            bool readNext = false;
+            foreach (PathNode node in currentPath)
+            {
+                if (readNext)
+                {
+                    Speak("Next jump is " + node.Local.Name);
+                    return;
+                }
+                if (node.Local.Name.Equals(currentSystem.Name)) readNext = true;
+            }
+
+            if (readNext)
+            {
+                // We've arrived at the target system. If this system sells any rares,
+                // read the dock name.
+                var message = "You have arrived; ";
+                foreach (RareGood rare in RareData.GetRares()) {
+                    if (rare.LocationName.Equals(currentSystem.Name)) {
+                        message += "Dock at " + rare.Station;
+                        break;
+                    }
+                }
+                Speak(message);
+            }
+            else
+            {
+                // This system isn't on the route. Should we say something?
+                int x = new Random().Next(100);
+                if (x > 85) Speak("Do you know where we're going?");
+                else if (x > 95) Speak("Can't we just stop and ask for directions?");
+            }
+        }
+
+        private void Speak(string text) {
+            speechSynthesizer.SpeakAsync(text);
         }
 
         private void GetCurrentSystemFromLog(object sender, EventArgs e)
         {
-            if (LogWatcher == null) return;
-            var loc = LogWatcher.CurrentSystem();
+            if (logWatcher == null) return;
+            var loc = logWatcher.CurrentSystem();
             if (loc == null) return;
             CurrentSystem.Text = loc.Name;
         }
