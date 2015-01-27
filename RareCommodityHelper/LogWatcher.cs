@@ -86,7 +86,7 @@ namespace RareCommodityHelper
         //   3: body (unused)
         //   4, 5, 6: x, y, z coordinates
         static private Regex ARRIVE_IN_SYSTEM_REGEX =
-            new Regex("System:(\\d+)\\((.*?)\\).*?Body:(\\d+) Pos:\\((-?\\d+\\.\\d*),(-?\\d+\\.\\d*),(-?\\d+\\.\\d*)\\)");
+            new Regex("System:(\\d+)\\((.*?)\\).*?Body:(\\d+) Pos:\\((-?\\d+\\.\\d*(?:[eE]\\+\\d+)?),(-?\\d+\\.\\d*(?:[eE]\\+\\d+)?),(-?\\d+\\.\\d*(?:[eE]\\+\\d+)?)\\)");
 
         static private Regex NETLOG_FILE_REGEX = new Regex("netLog\\.[.\\d]+");
 
