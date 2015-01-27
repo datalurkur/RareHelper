@@ -120,6 +120,7 @@ namespace RareCommodityHelper
 
             speechSynthesizer = new SpeechSynthesizer();
             speechSynthesizer.SetOutputToDefaultAudioDevice();
+            speechSynthesizer.Rate = -2;
 
             // Load spaaaace
             galaxy = new Galaxy();
@@ -555,7 +556,7 @@ namespace RareCommodityHelper
             }
             catch (Exception exc)
             {
-                logDirectoryNote.Text = "Could not watch log directory: " + exc;
+                MessageBox.Show("Could not watch log directory:\n" + exc, "Fuck!", MessageBoxButtons.OK);
             }
         }
 
@@ -588,7 +589,10 @@ namespace RareCommodityHelper
             {
                 if (readNext)
                 {
-                    Speak("Next jump is " + node.Local.Name);
+                    var whole = Math.Floor(node.TraversalCost);
+                    var part = Math.Floor((node.TraversalCost - whole) * 10);
+                    Speak(string.Format(
+                        "Next, jump {0} point {1} light years to; {2}", whole, part, node.Local.PhoenicName()));
                     return;
                 }
                 if (node.Local.Name.Equals(currentSystem.Name)) readNext = true;

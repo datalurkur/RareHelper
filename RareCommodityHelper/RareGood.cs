@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System;
+using System.Text;
+using System.Text.RegularExpressions;
 
 public class StarSystem
 {
@@ -11,6 +13,22 @@ public class StarSystem
     public float Distance(StarSystem other)
     {
         return Position.Distance(other.Position);
+    }
+
+    public string PhoenicName()
+    {
+        return BIG_NUMBER_REGEX.Replace(Name, new MatchEvaluator(SeparateDigits));
+    }
+
+    private static Regex BIG_NUMBER_REGEX = new Regex("\\d{3,}");
+    private string SeparateDigits(Match m)
+    {
+        var s = new StringBuilder();
+        foreach (var ch in m.Value) {
+            if (s.Length > 0) s.Append("; ");  // This adds a pause.
+            s.Append(ch);
+        }
+        return s.ToString();
     }
 }
 
