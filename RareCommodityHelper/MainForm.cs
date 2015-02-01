@@ -130,6 +130,14 @@ namespace RareCommodityHelper
             logWatcher = new LogWatcher(settings.LogDirectory);
             logWatcher.OnSystemChanged += StarSystemChanged;
 
+            // Load the rare cache, and notify the user if we're using hardcoded data.
+            RareData.GetRares();
+            if (RareData.UsingHardcoded()) {
+                MessageBox.Show("Using hard-coded rare data, which is incomplete. Use an updated " +
+                "Rares.xml to get better routes and avoid this.",
+                 "Bummer.", MessageBoxButtons.OK);
+            }
+            
             currentRoute = null;
         }
 

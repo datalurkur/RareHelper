@@ -4,6 +4,7 @@ using System;
 
 public class RareData
 {
+    private static bool usingHardcoded;
     public class RareCache
     {
         public List<RareGood> rares;
@@ -119,13 +120,20 @@ public class RareData
         return temp;
     }
 
+    public static bool UsingHardcoded()
+    {
+        return usingHardcoded;
+    }
+
     public static List<RareGood> GetRares()
     {
         RareCache cache;
         if (LocalData<RareCache>.LoadRunData("Rares.xml", out cache))
         {
+            usingHardcoded = false;
             return cache.rares;
         }
+        usingHardcoded = true;
         return HardcodedRares();
     }
 }
