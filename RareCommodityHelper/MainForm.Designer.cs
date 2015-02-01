@@ -46,6 +46,12 @@
             this.RouteTab = new System.Windows.Forms.TabPage();
             this.RouteResults = new System.Windows.Forms.ListView();
             this.SettingsTab = new System.Windows.Forms.TabPage();
+            this.MaxDistanceUpDown = new System.Windows.Forms.NumericUpDown();
+            this.MaxDistanceLabel = new System.Windows.Forms.Label();
+            this.IgnoreUnknownStationDistanceCheckBox = new System.Windows.Forms.CheckBox();
+            this.MaxDistanceCheckBox = new System.Windows.Forms.CheckBox();
+            this.ReadDirectionsCheckBox = new System.Windows.Forms.CheckBox();
+            this.ReadDirectionsLabel = new System.Windows.Forms.Label();
             this.logDirectoryNote = new System.Windows.Forms.Label();
             this.applyLogDirectoryButton = new System.Windows.Forms.Button();
             this.LogDirectoryTextBox = new System.Windows.Forms.TextBox();
@@ -66,13 +72,12 @@
             this.BlacklistButton = new System.Windows.Forms.Button();
             this.UnblacklistButton = new System.Windows.Forms.Button();
             this.UpdateFromLogButton = new System.Windows.Forms.Button();
-            this.ReadDirectionsCheckBox = new System.Windows.Forms.CheckBox();
-            this.ReadDirectionsLabel = new System.Windows.Forms.Label();
             this.ResultsTabControl.SuspendLayout();
             this.RareResultsTab.SuspendLayout();
             this.PathResultsTab.SuspendLayout();
             this.RouteTab.SuspendLayout();
             this.SettingsTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxDistanceUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // CurrentSystem
@@ -268,6 +273,10 @@
             // SettingsTab
             // 
             this.SettingsTab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.SettingsTab.Controls.Add(this.MaxDistanceUpDown);
+            this.SettingsTab.Controls.Add(this.MaxDistanceLabel);
+            this.SettingsTab.Controls.Add(this.IgnoreUnknownStationDistanceCheckBox);
+            this.SettingsTab.Controls.Add(this.MaxDistanceCheckBox);
             this.SettingsTab.Controls.Add(this.ReadDirectionsCheckBox);
             this.SettingsTab.Controls.Add(this.ReadDirectionsLabel);
             this.SettingsTab.Controls.Add(this.logDirectoryNote);
@@ -281,6 +290,76 @@
             this.SettingsTab.Size = new System.Drawing.Size(751, 637);
             this.SettingsTab.TabIndex = 3;
             this.SettingsTab.Text = "Settings";
+            // 
+            // MaxDistanceUpDown
+            // 
+            this.MaxDistanceUpDown.Location = new System.Drawing.Point(285, 173);
+            this.MaxDistanceUpDown.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.MaxDistanceUpDown.Name = "MaxDistanceUpDown";
+            this.MaxDistanceUpDown.Size = new System.Drawing.Size(80, 21);
+            this.MaxDistanceUpDown.TabIndex = 17;
+            this.MaxDistanceUpDown.Value = new decimal(new int[] {
+            1250,
+            0,
+            0,
+            0});
+            this.MaxDistanceUpDown.Leave += new System.EventHandler(this.RareFiltersChanged);
+            // 
+            // MaxDistanceLabel
+            // 
+            this.MaxDistanceLabel.AutoSize = true;
+            this.MaxDistanceLabel.Location = new System.Drawing.Point(371, 175);
+            this.MaxDistanceLabel.Name = "MaxDistanceLabel";
+            this.MaxDistanceLabel.Size = new System.Drawing.Size(199, 14);
+            this.MaxDistanceLabel.TabIndex = 16;
+            this.MaxDistanceLabel.Text = "Ls from the primary star";
+            // 
+            // IgnoreUnknownStationDistanceCheckBox
+            // 
+            this.IgnoreUnknownStationDistanceCheckBox.AutoSize = true;
+            this.IgnoreUnknownStationDistanceCheckBox.Location = new System.Drawing.Point(28, 209);
+            this.IgnoreUnknownStationDistanceCheckBox.Name = "IgnoreUnknownStationDistanceCheckBox";
+            this.IgnoreUnknownStationDistanceCheckBox.Size = new System.Drawing.Size(333, 18);
+            this.IgnoreUnknownStationDistanceCheckBox.TabIndex = 15;
+            this.IgnoreUnknownStationDistanceCheckBox.Text = "Ignore stations with unknown distances";
+            this.IgnoreUnknownStationDistanceCheckBox.UseVisualStyleBackColor = true;
+            this.IgnoreUnknownStationDistanceCheckBox.CheckedChanged += new System.EventHandler(this.RareFiltersChanged);
+            // 
+            // MaxDistanceCheckBox
+            // 
+            this.MaxDistanceCheckBox.AutoSize = true;
+            this.MaxDistanceCheckBox.Location = new System.Drawing.Point(28, 175);
+            this.MaxDistanceCheckBox.Name = "MaxDistanceCheckBox";
+            this.MaxDistanceCheckBox.Size = new System.Drawing.Size(253, 18);
+            this.MaxDistanceCheckBox.TabIndex = 15;
+            this.MaxDistanceCheckBox.Text = "Ignore stations further than";
+            this.MaxDistanceCheckBox.UseVisualStyleBackColor = true;
+            this.MaxDistanceCheckBox.CheckedChanged += new System.EventHandler(this.RareFiltersChanged);
+            // 
+            // ReadDirectionsCheckBox
+            // 
+            this.ReadDirectionsCheckBox.AutoSize = true;
+            this.ReadDirectionsCheckBox.Location = new System.Drawing.Point(28, 100);
+            this.ReadDirectionsCheckBox.Name = "ReadDirectionsCheckBox";
+            this.ReadDirectionsCheckBox.Size = new System.Drawing.Size(149, 18);
+            this.ReadDirectionsCheckBox.TabIndex = 12;
+            this.ReadDirectionsCheckBox.Text = "Read Directions";
+            this.ReadDirectionsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ReadDirectionsLabel
+            // 
+            this.ReadDirectionsLabel.AutoSize = true;
+            this.ReadDirectionsLabel.Location = new System.Drawing.Point(36, 121);
+            this.ReadDirectionsLabel.MaximumSize = new System.Drawing.Size(700, 0);
+            this.ReadDirectionsLabel.Name = "ReadDirectionsLabel";
+            this.ReadDirectionsLabel.Size = new System.Drawing.Size(679, 28);
+            this.ReadDirectionsLabel.TabIndex = 11;
+            this.ReadDirectionsLabel.Text = "When following a path, read the next system to navigate to after each system shif" +
+    "t. Requires the Log Directory to be set correctly.";
             // 
             // logDirectoryNote
             // 
@@ -472,27 +551,6 @@
             this.UpdateFromLogButton.UseVisualStyleBackColor = false;
             this.UpdateFromLogButton.Click += new System.EventHandler(this.GetCurrentSystemFromLog);
             // 
-            // ReadDirectionsCheckBox
-            // 
-            this.ReadDirectionsCheckBox.AutoSize = true;
-            this.ReadDirectionsCheckBox.Location = new System.Drawing.Point(28, 100);
-            this.ReadDirectionsCheckBox.Name = "ReadDirectionsCheckBox";
-            this.ReadDirectionsCheckBox.Size = new System.Drawing.Size(149, 18);
-            this.ReadDirectionsCheckBox.TabIndex = 12;
-            this.ReadDirectionsCheckBox.Text = "Read Directions";
-            this.ReadDirectionsCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // ReadDirectionsLabel
-            // 
-            this.ReadDirectionsLabel.AutoSize = true;
-            this.ReadDirectionsLabel.Location = new System.Drawing.Point(36, 121);
-            this.ReadDirectionsLabel.MaximumSize = new System.Drawing.Size(700, 0);
-            this.ReadDirectionsLabel.Name = "ReadDirectionsLabel";
-            this.ReadDirectionsLabel.Size = new System.Drawing.Size(679, 28);
-            this.ReadDirectionsLabel.TabIndex = 11;
-            this.ReadDirectionsLabel.Text = "When following a path, read the next system to navigate to after each system shif" +
-    "t. Requires the Log Directory to be set correctly.";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
@@ -538,6 +596,7 @@
             this.RouteTab.ResumeLayout(false);
             this.SettingsTab.ResumeLayout(false);
             this.SettingsTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxDistanceUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -585,6 +644,10 @@
         private System.Windows.Forms.Button UpdateFromLogButton;
         private System.Windows.Forms.CheckBox ReadDirectionsCheckBox;
         private System.Windows.Forms.Label ReadDirectionsLabel;
+        private System.Windows.Forms.CheckBox MaxDistanceCheckBox;
+        private System.Windows.Forms.NumericUpDown MaxDistanceUpDown;
+        private System.Windows.Forms.Label MaxDistanceLabel;
+        private System.Windows.Forms.CheckBox IgnoreUnknownStationDistanceCheckBox;
     }
 }
 

@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 public class StarSystem
 {
@@ -76,6 +77,14 @@ public class RareGood
     public float Distance(RareGood other)
     {
         return Location.Position.Distance(other.Location.Position);
+    }
+
+    private static Regex DISTANCE_REGEX = new Regex("(\\d+)ls");
+    public float StationDistanceInLightSeconds()
+    {
+        var m = DISTANCE_REGEX.Match(StationDistance);
+        if (!m.Success) return -1;
+        return float.Parse(m.Groups[1].Value, CultureInfo.InvariantCulture);
     }
 }
 

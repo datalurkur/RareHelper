@@ -25,6 +25,9 @@ namespace RareCommodityHelper
             public bool ReadDirections;
 
             public List<string> Blacklist;
+            public bool IgnoreUnknownStationDistance;
+            public decimal MaxStationDistanceValue;
+            public bool MaxStationDistanceEnabled;
 
             public Settings()
             {
@@ -115,6 +118,9 @@ namespace RareCommodityHelper
             UnblacklistButton.Click += Unblacklist;
             LogDirectoryTextBox.Text = settings.LogDirectory;
             ReadDirectionsCheckBox.Checked = settings.ReadDirections;
+            MaxDistanceUpDown.Value = settings.MaxStationDistanceValue;
+            MaxDistanceCheckBox.Checked = settings.MaxStationDistanceEnabled;
+            IgnoreUnknownStationDistanceCheckBox.Checked = settings.IgnoreUnknownStationDistance;
 
             blacklist = settings.Blacklist;
 
@@ -157,6 +163,9 @@ namespace RareCommodityHelper
             else
                 settings.LogDirectory = LogDirectoryTextBox.Text;
             settings.ReadDirections = ReadDirectionsCheckBox.Checked;
+            settings.MaxStationDistanceValue = MaxDistanceUpDown.Value;
+            settings.MaxStationDistanceEnabled = MaxDistanceCheckBox.Checked;
+            settings.IgnoreUnknownStationDistance = IgnoreUnknownStationDistanceCheckBox.Checked;
             LocalData<Settings>.SaveLocalData(settings, "Settings.xml");
 
             if (logWatcher != null) logWatcher.ShutDown();
@@ -182,22 +191,37 @@ namespace RareCommodityHelper
             RareGoodSelector.Items.Clear();
             RareGoodSelector.Items.AddRange(rareNames);
             rareData = new Dictionary<string, RareGood>();
+            ComputeAvailableRares();
+        }
+
+        private void ComputeAvailableRares()
+        {
             availableRares = new Dictionary<string, RareGood>();
-            foreach(RareGood rare in rares)
-            { 
-                try
-                {
-                    rare.Location = galaxy.Systems[rare.LocationName];
-                    rareData[rare.Name] = rare;
-                    if (!blacklist.Contains(rare.Name))
-                    {
-                        availableRares[rare.Name] = rare;
-                    }
-                }
-                catch
+            foreach (RareGood rare in RareData.GetRares())
+            {
+                if (!galaxy.Systems.ContainsKey(rare.LocationName))
                 {
                     MessageBox.Show(String.Format("Failed to get data for system {0} associated with rare good {1}, rare data may be out-of-date, or we may have failed to get data from EDStarCoordinator.", rare.LocationName, rare.Name), "Fuck!", MessageBoxButtons.OK);
+                    continue;
                 }
+
+                rare.Location = galaxy.Systems[rare.LocationName];
+                rareData[rare.Name] = rare;
+                if (blacklist.Contains(rare.Name)) continue;
+
+                float stationDistance = rare.StationDistanceInLightSeconds();
+                if (MaxDistanceCheckBox.Checked && 
+                    ((float) MaxDistanceUpDown.Value) < stationDistance)
+                {
+                    continue;  // Station is too far from primary star.
+                }
+
+                if (stationDistance < 0 && IgnoreUnknownStationDistanceCheckBox.Checked)
+                {
+                    continue;
+                }
+
+                availableRares[rare.Name] = rare;
             }
         }
 
@@ -638,6 +662,17 @@ namespace RareCommodityHelper
             var loc = logWatcher.CurrentSystem();
             if (loc == null) return;
             CurrentSystem.Text = loc.Name;
+        }
+
+        private void RareFiltersChanged(object sender, EventArgs e)
+        {
+            if (galaxy == null)
+            {
+                // We haven't finished loading the galaxy yet. Ignore this event. We'll
+                // compute the available rares once the galaxy is available.
+                return;
+            }
+            ComputeAvailableRares();
         }
     }
 }
