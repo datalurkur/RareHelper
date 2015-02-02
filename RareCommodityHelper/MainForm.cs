@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Speech.Synthesis;
 
 namespace RareCommodityHelper
 {
@@ -20,8 +21,13 @@ namespace RareCommodityHelper
             public string JumpsPerLeg;
             public string MaxJumps;
             public string IdealSellDistance;
+            public string LogDirectory;
+            public bool ReadDirections;
 
             public List<string> Blacklist;
+            public bool IgnoreUnknownStationDistance;
+            public decimal MaxStationDistanceValue;
+            public bool MaxStationDistanceEnabled;
 
             public Settings()
             {
@@ -31,6 +37,8 @@ namespace RareCommodityHelper
                 JumpsPerLeg = "4";
                 MaxJumps = "10";
                 IdealSellDistance = "150";
+                LogDirectory = null;
+                ReadDirections = true;
 
                 Blacklist = new List<string>();
             }
@@ -43,6 +51,9 @@ namespace RareCommodityHelper
         private int rareColumn = 0;
         private bool rareAscending = true;
         private List<string> blacklist;
+        private LogWatcher logWatcher;
+        private List<PathNode> currentPath;
+        private SpeechSynthesizer speechSynthesizer;
 
         public MainForm()
         {
@@ -105,13 +116,34 @@ namespace RareCommodityHelper
             RareGoodSelector.DrawItem += DrawRaresComboBox;
             BlacklistButton.Click += Blacklist;
             UnblacklistButton.Click += Unblacklist;
+            LogDirectoryTextBox.Text = settings.LogDirectory;
+            ReadDirectionsCheckBox.Checked = settings.ReadDirections;
+            MaxDistanceUpDown.Value = settings.MaxStationDistanceValue;
+            MaxDistanceCheckBox.Checked = settings.MaxStationDistanceEnabled;
+            IgnoreUnknownStationDistanceCheckBox.Checked = settings.IgnoreUnknownStationDistance;
 
             blacklist = settings.Blacklist;
+
+            speechSynthesizer = new SpeechSynthesizer();
+            speechSynthesizer.SetOutputToDefaultAudioDevice();
+            speechSynthesizer.Rate = -2;
 
             // Load spaaaace
             galaxy = new Galaxy();
             UpdateSystems();
 
+            // Start tracking the player.
+            logWatcher = new LogWatcher(settings.LogDirectory);
+            logWatcher.OnSystemChanged += StarSystemChanged;
+
+            // Load the rare cache, and notify the user if we're using hardcoded data.
+            RareData.GetRares();
+            if (RareData.UsingHardcoded()) {
+                MessageBox.Show("Using hard-coded rare data, which is incomplete. Use an updated " +
+                "Rares.xml to get better routes and avoid this.",
+                 "Bummer.", MessageBoxButtons.OK);
+            }
+            
             currentRoute = null;
         }
 
@@ -126,7 +158,17 @@ namespace RareCommodityHelper
             settings.MaxJumps = MaxJumps.Text;
             settings.IdealSellDistance = IdealSellDistance.Text;
             settings.Blacklist = blacklist;
+            if (logWatcher != null)
+                settings.LogDirectory = logWatcher.LogDirectory();
+            else
+                settings.LogDirectory = LogDirectoryTextBox.Text;
+            settings.ReadDirections = ReadDirectionsCheckBox.Checked;
+            settings.MaxStationDistanceValue = MaxDistanceUpDown.Value;
+            settings.MaxStationDistanceEnabled = MaxDistanceCheckBox.Checked;
+            settings.IgnoreUnknownStationDistance = IgnoreUnknownStationDistanceCheckBox.Checked;
             LocalData<Settings>.SaveLocalData(settings, "Settings.xml");
+
+            if (logWatcher != null) logWatcher.ShutDown();
         }
 
         private async void UpdateSystems()
@@ -149,22 +191,37 @@ namespace RareCommodityHelper
             RareGoodSelector.Items.Clear();
             RareGoodSelector.Items.AddRange(rareNames);
             rareData = new Dictionary<string, RareGood>();
+            ComputeAvailableRares();
+        }
+
+        private void ComputeAvailableRares()
+        {
             availableRares = new Dictionary<string, RareGood>();
-            foreach(RareGood rare in rares)
-            { 
-                try
-                {
-                    rare.Location = galaxy.Systems[rare.LocationName];
-                    rareData[rare.Name] = rare;
-                    if (!blacklist.Contains(rare.Name))
-                    {
-                        availableRares[rare.Name] = rare;
-                    }
-                }
-                catch
+            foreach (RareGood rare in RareData.GetRares())
+            {
+                if (!galaxy.Systems.ContainsKey(rare.LocationName))
                 {
                     MessageBox.Show(String.Format("Failed to get data for system {0} associated with rare good {1}, rare data may be out-of-date, or we may have failed to get data from EDStarCoordinator.", rare.LocationName, rare.Name), "Fuck!", MessageBoxButtons.OK);
+                    continue;
                 }
+
+                rare.Location = galaxy.Systems[rare.LocationName];
+                rareData[rare.Name] = rare;
+                if (blacklist.Contains(rare.Name)) continue;
+
+                float stationDistance = rare.StationDistanceInLightSeconds();
+                if (MaxDistanceCheckBox.Checked && 
+                    ((float) MaxDistanceUpDown.Value) < stationDistance)
+                {
+                    continue;  // Station is too far from primary star.
+                }
+
+                if (stationDistance < 0 && IgnoreUnknownStationDistanceCheckBox.Checked)
+                {
+                    continue;
+                }
+
+                availableRares[rare.Name] = rare;
             }
         }
 
@@ -260,6 +317,7 @@ namespace RareCommodityHelper
                 newItem.SubItems.Add(n.HScore.ToString("0.00"));
                 PathResults.Items.Add(newItem);
             }
+            currentPath = path;
         }
 
         private void ComputeRoute(object sender, EventArgs args)
@@ -513,6 +571,108 @@ namespace RareCommodityHelper
             string r = RareGoodSelector.Text;
             blacklist.Remove(r);
             availableRares.Add(r, rareData[r]);
+        }
+
+        private void UpdateLogDirectory(object sender, EventArgs e)
+        {
+            try
+            {
+                var newWatcher = new LogWatcher(LogDirectoryTextBox.Text);
+                newWatcher.OnSystemChanged += StarSystemChanged;
+                if (logWatcher != null)
+                {
+                    logWatcher.ShutDown();
+                }
+                logWatcher = newWatcher;
+                logDirectoryNote.Text = "Watcher updated";
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Could not watch log directory:\n" + exc, "Fuck!", MessageBoxButtons.OK);
+            }
+        }
+
+        private void StarSystemChanged(StarSystem newSystem)
+        {
+            if (newSystem == null) return;
+
+            // Broadcast is sent by a background thread -- cannot set text directly.
+            CurrentSystem.Invoke((Action) delegate
+            {
+                this.Text = newSystem.Name;
+            });
+
+            // Check to see if we should announce the next system.
+            var shouldReadNextSystem = false;
+            ReadDirectionsCheckBox.Invoke((Action) delegate
+            {
+                shouldReadNextSystem = ReadDirectionsCheckBox.Checked;
+            });
+
+            if (shouldReadNextSystem) ReadNextSystem(newSystem);
+        }
+
+        private void ReadNextSystem(StarSystem currentSystem)
+        {
+            if (currentPath == null || currentSystem == null) return;
+
+            bool readNext = false;
+            foreach (PathNode node in currentPath)
+            {
+                if (readNext)
+                {
+                    var whole = Math.Floor(node.TraversalCost);
+                    var part = Math.Floor((node.TraversalCost - whole) * 10);
+                    Speak(string.Format(
+                        "Next, jump {0} point {1} light years to; {2}", whole, part, node.Local.PhoenicName()));
+                    return;
+                }
+                if (node.Local.Name.Equals(currentSystem.Name)) readNext = true;
+            }
+
+            if (readNext)
+            {
+                // We've arrived at the target system. If this system sells any rares,
+                // read the dock name.
+                var message = "You have arrived; ";
+                foreach (RareGood rare in RareData.GetRares()) {
+                    if (rare.LocationName.Equals(currentSystem.Name)) {
+                        message += "Dock at " + rare.Station;
+                        break;
+                    }
+                }
+                Speak(message);
+            }
+            else
+            {
+                // This system isn't on the route. Should we say something?
+                int x = new Random().Next(100);
+                if (x > 85) Speak("Do you know where we're going?");
+                else if (x > 95) Speak("Can't we just stop and ask for directions?");
+            }
+        }
+
+        private void Speak(string text) {
+            speechSynthesizer.SpeakAsync(text);
+        }
+
+        private void GetCurrentSystemFromLog(object sender, EventArgs e)
+        {
+            if (logWatcher == null) return;
+            var loc = logWatcher.CurrentSystem();
+            if (loc == null) return;
+            CurrentSystem.Text = loc.Name;
+        }
+
+        private void RareFiltersChanged(object sender, EventArgs e)
+        {
+            if (galaxy == null)
+            {
+                // We haven't finished loading the galaxy yet. Ignore this event. We'll
+                // compute the available rares once the galaxy is available.
+                return;
+            }
+            ComputeAvailableRares();
         }
     }
 }
